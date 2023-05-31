@@ -2,15 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { TankColors } from '../helpers/fake-backend';
 
 import { AuthenticationService } from '../services';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+  templateUrl: 'login.component.html',
+  styleUrls: ['login.component.css'],
+})
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   loading = false;
-  submitted = false;
+  loginSubmitted = false;
   error = '';
+
+  teamRegistrationForm!: FormGroup;
+  teamSubmitted = false;
+  tankColors = TankColors;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +37,11 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    this.teamRegistrationForm = this.formBuilder.group({
+      teamName: [''],
+      teamColor: [''],
+    });
   }
 
   // convenience getter for easy access to form fields
@@ -36,8 +49,12 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  onSubmit() {
-    this.submitted = true;
+  get r() {
+    return this.teamRegistrationForm.controls;
+  }
+
+  onLoginSubmit() {
+    this.loginSubmitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -60,5 +77,20 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
       });
+  }
+
+  onRegister() {
+    this.teamSubmitted = true;
+
+    if (this.teamRegistrationForm.invalid) {
+      return;
+    }
+
+    this.error = '';
+    this.loading = true;
+    this.authenticationService.registerTeam(
+      this.r.teamName.value,
+      this.r.teamColor.value
+    );
   }
 }

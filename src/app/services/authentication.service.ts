@@ -40,6 +40,12 @@ export class AuthenticationService {
       );
   }
 
+  // TODO: Strongly type teamColor to specfic values
+  registerTeam(teamName: string, teamColor: string) {
+    console.log(`Added: ${teamName} of color ${teamColor} to database`);
+    // Add backend api to send to mongoDB
+  }
+
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');

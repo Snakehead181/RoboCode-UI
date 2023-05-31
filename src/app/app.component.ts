@@ -4,10 +4,8 @@ import { AuthenticationService } from './services';
 
 @Component({
   selector: 'app-root',
-  template: ` <nav
-      class="navbar navbar-expand navbar-dark bg-dark px-3"
-      *ngIf="user"
-    >
+  template: `<html>
+    <nav class="navbar navbar-expand navbar-dark bg-dark px-3" *ngIf="user">
       <div class="navbar-nav">
         <a
           class="nav-item nav-link"
@@ -15,6 +13,12 @@ import { AuthenticationService } from './services';
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           >Home</a
+        >
+        <a
+          class="nav-item nav-link"
+          routerLink="/leaderboard"
+          routerLinkActive="active"
+          >Leaderboard</a
         >
         <button class="btn btn-link nav-item nav-link" (click)="logout()">
           Logout
@@ -24,7 +28,8 @@ import { AuthenticationService } from './services';
 
     <div class="container">
       <router-outlet></router-outlet>
-    </div>`,
+    </div>
+  </html>`,
 })
 export class AppComponent {
   user?: User | null;

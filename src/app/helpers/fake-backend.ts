@@ -20,7 +20,16 @@ const users: User[] = [
     firstName: 'Test',
     lastName: 'User',
   },
+  {
+    id: 2,
+    username: 'battle-bots',
+    password: '213',
+    firstName: 'Battle',
+    lastName: 'Bots',
+  },
 ];
+
+export const TankColors = ['blue', 'red', 'pink', 'orange', 'grey'];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {

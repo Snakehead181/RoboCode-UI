@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BasicAuthInterceptor, ErrorInterceptor } from './helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { TankComponent } from './leaderboard/tank.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,13 @@ import { LoginComponent } from './login';
     HttpClientModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HomeComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    LeaderboardComponent,
+    TankComponent,
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

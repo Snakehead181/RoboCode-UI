@@ -7,11 +7,9 @@ import { UserService } from '../services';
 @Component({
   selector: 'home',
   template: `<div class="card mt-4">
-    <h4 class="card-header">
-      You're logged in with Angular 14 & Basic HTTP Authentication!!
-    </h4>
+    <h4 class="card-header">Welcome to RoboCode 2023</h4>
     <div class="card-body">
-      <h6>Users from secure api end point</h6>
+      <h6>Users Registered</h6>
       <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
       <ul *ngIf="users">
         <li *ngFor="let user of users">
