@@ -44,6 +44,7 @@ export class AuthenticationService {
   registerTeam(teamName: string, teamColor: string) {
     console.log(`Added: ${teamName} of color ${teamColor} to database`);
     // Add backend api to send to mongoDB
+    return;
   }
 
   logout() {

@@ -12,12 +12,13 @@ import { AuthenticationService } from '../services';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  loading = false;
+  loginLoading = false;
   loginSubmitted = false;
   error = '';
 
   teamRegistrationForm!: FormGroup;
   teamSubmitted = false;
+  registerLoading = false;
   tankColors = TankColors;
 
   constructor(
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
 
     this.teamRegistrationForm = this.formBuilder.group({
       teamName: [''],
-      teamColor: [''],
+      tankColor: [''],
     });
   }
 
@@ -62,7 +63,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.error = '';
-    this.loading = true;
+    this.loginLoading = true;
     this.authenticationService
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit {
         },
         error: (error) => {
           this.error = error;
-          this.loading = false;
+          this.loginLoading = false;
         },
       });
   }
@@ -87,10 +88,16 @@ export class LoginComponent implements OnInit {
     }
 
     this.error = '';
-    this.loading = true;
+    this.registerLoading = true;
     this.authenticationService.registerTeam(
       this.r.teamName.value,
-      this.r.teamColor.value
+      this.r.tankColor.value
     );
+    setTimeout(this.myStopFunction, 1000);
+    this.registerLoading = false;
+  }
+
+  myStopFunction() {
+    return;
   }
 }

@@ -1,7 +1,7 @@
 <div class="col-md-6 offset-md-3 mt-5">
   <div class="alert alert-info">
-    Username: test<br />
-    Password: test
+    Username: admin<br />
+    Password: Admin-2023
   </div>
   <div class="card">
     <h4 class="card-header">Robocode Login</h4>
@@ -37,9 +37,9 @@
             <div *ngIf="f.password.errors.required">Password is required</div>
           </div>
         </div>
-        <button [disabled]="loading" class="btn btn-primary">
+        <button [disabled]="loginLoading" class="btn btn-primary">
           <span
-            *ngIf="loading"
+            *ngIf="loginLoading"
             class="spinner-border spinner-border-sm me-1"
           ></span>
           Login
@@ -65,27 +65,23 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Team Colour</label>
+          <label class="form-label">Tank Colour</label>
           <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+            <select
+              formControlName="tankColor"
+              class="form-select"
+              aria-label="Default select example"
             >
-              Dropdown button
-            </button>
-            <select formControlName="teamColor"></select>
-            <ul class="dropdown-menu" *ngFor="let color of tankColors">
-              <li>
-                <a class="dropdown-item">{{ color }}</a>
-              </li>
-            </ul>
+              <option value="null">Select Team Color</option>
+              <option *ngFor="let color of tankColors" [value]="color">
+                {{ color }}
+              </option>
+            </select>
           </div>
         </div>
-        <button [disabled]="loading" class="btn btn-primary">
+        <button [disabled]="registerLoading" class="btn btn-primary">
           <span
-            *ngIf="loading"
+            *ngIf="registerLoading"
             class="spinner-border spinner-border-sm me-1"
           ></span>
           Register Team

@@ -30,6 +30,13 @@ import { AuthenticationService } from './services';
       <router-outlet></router-outlet>
     </div>
   </html>`,
+  styles: [
+    `
+      nav {
+        background-color: black !important;
+      }
+    `,
+  ],
 })
 export class AppComponent {
   user?: User | null;

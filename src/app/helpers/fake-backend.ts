@@ -15,10 +15,10 @@ import { User } from '../models';
 const users: User[] = [
   {
     id: 1,
-    username: 'test',
-    password: 'test',
-    firstName: 'Test',
-    lastName: 'User',
+    username: 'admin',
+    password: 'Admin-2023',
+    firstName: 'Admin',
+    lastName: '2023',
   },
   {
     id: 2,
@@ -27,9 +27,16 @@ const users: User[] = [
     firstName: 'Battle',
     lastName: 'Bots',
   },
+  {
+    id: 3,
+    username: 'test',
+    password: 'test',
+    firstName: 'Test',
+    lastName: 'User',
+  },
 ];
 
-export const TankColors = ['blue', 'red', 'pink', 'orange', 'grey'];
+export const TankColors = ['Blue', 'Red', 'Pink', 'Orange', 'Grey'];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -98,7 +105,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function isLoggedIn() {
       return (
-        headers.get('Authorization') === `Basic ${window.btoa('test:test')}`
+        headers.get('Authorization') ===
+        `Basic ${window.btoa('admin:Admin-2023')}`
       );
     }
   }
