@@ -13,6 +13,10 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TankComponent } from './leaderboard/tank.component';
+import { StoreModule } from '@ngrx/store';
+import { TeamService } from './services';
+import { CommonModule } from '@angular/common';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -20,7 +24,10 @@ import { TankComponent } from './leaderboard/tank.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    StoreModule.forRoot({}, {}),
+    CommonModule,
   ],
+
   declarations: [
     AppComponent,
     HomeComponent,
@@ -31,7 +38,8 @@ import { TankComponent } from './leaderboard/tank.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    TeamService,
+    UserService,
     // provider used to create fake backend
     fakeBackendProvider,
   ],

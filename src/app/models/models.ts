@@ -6,3 +6,11 @@ export interface User {
   lastName: string;
   authdata?: string;
 }
+
+export interface Team {
+  _id: string;
+  name: string;
+  number: string;
+  color: string;
+  score: number;
+}

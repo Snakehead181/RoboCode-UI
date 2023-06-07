@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { User } from '../models';
-import { UserService } from '../services';
+import { TeamService } from '../services';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'home',
@@ -27,8 +28,12 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loading = true;
+    this.loadAllUsers();
+  }
+
+  loadAllUsers() {
     this.userService
-      .getAll()
+      .getUsers()
       .pipe(first())
       .subscribe((users) => {
         this.loading = false;
