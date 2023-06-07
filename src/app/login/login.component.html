@@ -50,46 +50,4 @@
       </form>
     </div>
   </div>
-
-  <br />
-
-  <div class="card">
-    <h4 class="card-header">Register Team</h4>
-    <div class="card-body">
-      <form [formGroup]="teamRegistrationForm" (ngSubmit)="onRegister()">
-        <div class="mb-3">
-          <label class="form-label">Team Name</label>
-          <input type="text" formControlName="teamName" class="form-control" />
-          <div *ngIf="f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Tank Colour</label>
-          <div class="dropdown">
-            <select
-              formControlName="tankColor"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option value="null">Select Team Color</option>
-              <option *ngFor="let color of tankColors" [value]="color">
-                {{ color }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <button [disabled]="registerLoading" class="btn btn-primary">
-          <span
-            *ngIf="registerLoading"
-            class="spinner-border spinner-border-sm me-1"
-          ></span>
-          Register Team
-        </button>
-        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
-          {{ error }}
-        </div>
-      </form>
-    </div>
-  </div>
 </div>
