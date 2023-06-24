@@ -16,6 +16,12 @@ import { AuthenticationService } from './services';
         >
         <a
           class="nav-item nav-link"
+          routerLink="/mentors"
+          routerLinkActive="active"
+          >Mentors</a
+        >
+        <a
+          class="nav-item nav-link"
           routerLink="/leaderboard"
           routerLinkActive="active"
           >Leaderboard</a

@@ -17,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
+import { teamReducer } from './state/teams/teams.reducer';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { UserService } from './services/user.service';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ team: teamReducer }),
     CommonModule,
   ],
 
