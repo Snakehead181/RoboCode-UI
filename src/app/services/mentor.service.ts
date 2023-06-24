@@ -18,4 +18,9 @@ export class MentorService {
         this.store.dispatch(MentorsLoaded({ data: res }));
       });
   }
+
+  addMentor(mentor) {
+    console.log('Add Mentor');
+    return this.httpClient.post('http://localhost:3000/mentors', mentor);
+  }
 }

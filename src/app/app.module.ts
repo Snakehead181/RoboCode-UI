@@ -21,6 +21,7 @@ import { teamReducer } from './state/teams/teams.reducer';
 import { mentorReducer } from './state/mentors/mentors.reducer';
 import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
+import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { rootReducer } from './state/root.reducer';
     LeaderboardComponent,
     TankComponent,
     MentorsComponent,
+    RegisterMentorComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

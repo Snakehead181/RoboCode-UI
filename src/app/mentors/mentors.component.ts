@@ -10,21 +10,31 @@ import { map } from 'rxjs';
 @Component({
   selector: 'mentors',
   template: `<div class="card mt-4">
-    <h4 class="card-header">Welcome to RoboCode 2023</h4>
+    <h4 class="card-header">Mentors</h4>
     <div class="card-body">
-      <h6>Mentors Registered</h6>
-      <div
-        *ngIf="loading$ | async"
-        class="spinner-border spinner-border-sm"
-      ></div>
-      <ul *ngIf="mentors$ | async as Data">
-        <li *ngFor="let mentor of Data">
-          {{ mentor.name }}
-        </li>
-        <li *ngIf="Data.length === 0">No Mentors Registered</li>
-      </ul>
+      <div class="row">
+        <div class="column">
+          <h6>Mentors Registered</h6>
+          <div
+            *ngIf="loading$ | async"
+            class="spinner-border spinner-border-sm"
+          ></div>
+          <ul *ngIf="mentors$ | async as Data">
+            <li *ngFor="let mentor of Data">
+              {{ mentor.name }}
+            </li>
+            <li *ngIf="Data.length === 0 && !(loading$ | async)">
+              No Mentors Registered
+            </li>
+          </ul>
+        </div>
+        <div class="column">
+          <register-mentor></register-mentor>
+        </div>
+      </div>
     </div>
   </div>`,
+  styleUrls: ['mentors.component.css'],
 })
 export class MentorsComponent {
   mentorsState$ = this.store.select((s: any) => s.mentor);
