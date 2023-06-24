@@ -9,10 +9,7 @@ import { map } from 'rxjs';
 @Component({
   template: `<div class="container">
     <h1 class="title">Robocode Leaderboard</h1>
-    <div
-      class="d-flex justify-content-center"
-      *ngIf="loading$ | async as Loading"
-    >
+    <div class="d-flex justify-content-center" *ngIf="loading$ | async">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>

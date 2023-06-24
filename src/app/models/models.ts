@@ -14,3 +14,11 @@ export interface Team {
   color: string;
   score: number;
 }
+
+export interface Mentor {
+  _id: string;
+  name: string;
+  username: string;
+  password: string;
+  assignedTeam: string;
+}

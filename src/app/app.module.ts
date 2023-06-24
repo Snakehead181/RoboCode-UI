@@ -14,10 +14,13 @@ import { LoginComponent } from './login';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TankComponent } from './leaderboard/tank.component';
 import { StoreModule } from '@ngrx/store';
-import { TeamService } from './services';
+import { MentorService, TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
 import { teamReducer } from './state/teams/teams.reducer';
+import { mentorReducer } from './state/mentors/mentors.reducer';
+import { MentorsComponent } from './mentors/mentors.component';
+import { rootReducer } from './state/root.reducer';
 
 @NgModule({
   imports: [
@@ -25,7 +28,7 @@ import { teamReducer } from './state/teams/teams.reducer';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({ team: teamReducer }),
+    StoreModule.forRoot(rootReducer),
     CommonModule,
   ],
 
@@ -35,12 +38,14 @@ import { teamReducer } from './state/teams/teams.reducer';
     LoginComponent,
     LeaderboardComponent,
     TankComponent,
+    MentorsComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     TeamService,
     UserService,
+    MentorService,
     // provider used to create fake backend
     fakeBackendProvider,
   ],
