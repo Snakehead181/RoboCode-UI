@@ -22,6 +22,7 @@ import { mentorReducer } from './state/mentors/mentors.reducer';
 import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
 import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
+import { MentorComponent } from './mentors/mentor/mentor.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { RegisterMentorComponent } from './mentors/register-mentor/register-ment
     TankComponent,
     MentorsComponent,
     RegisterMentorComponent,
+    MentorComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MentorService } from '../services/mentor.service';
 import { Store } from '@ngrx/store';
-import {
-  allMentors,
-  selectMentorState,
-} from '../state/mentors/mentors.selector';
+import { allMentors } from '../state/mentors/mentors.selector';
 import { map } from 'rxjs';
 
 @Component({
@@ -21,7 +18,7 @@ import { map } from 'rxjs';
           ></div>
           <ul *ngIf="mentors$ | async as Data">
             <li *ngFor="let mentor of Data">
-              {{ mentor.name }}
+              <a [routerLink]="mentor._id">{{ mentor.name }}</a>
             </li>
             <li *ngIf="Data.length === 0 && !(loading$ | async)">
               No Mentors Registered
