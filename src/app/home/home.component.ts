@@ -1,43 +1,75 @@
 import { Component } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { User } from '../models';
-import { TeamService } from '../services';
-import { UserService } from '../services/user.service';
+import { MentorService, TeamService } from '../services';
+import { Store } from '@ngrx/store';
+import { allMentors } from '../state/mentors/mentors.selector';
+import { allTeams } from '../state/teams/teams.selector';
 
 @Component({
   selector: 'home',
   template: `<div class="card mt-4">
     <h4 class="card-header">Welcome to RoboCode 2023</h4>
     <div class="card-body">
-      <h6>Users Registered</h6>
-      <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-      <ul *ngIf="users">
-        <li *ngFor="let user of users">
-          {{ user.firstName }} {{ user.lastName }}
-        </li>
-      </ul>
+      <div class="row">
+        <div class="column">
+          <h6>Teams</h6>
+          <div
+            *ngIf="loadingTeams$ | async"
+            class="spinner-border spinner-border-sm"
+          ></div>
+          <ul *ngIf="teams$ | async as teams">
+            <li *ngFor="let team of teams">
+              <a [routerLink]="'teams/' + team._id">{{ team.name }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="column">
+          <h6>Mentors</h6>
+          <div
+            *ngIf="loadingMentors$ | async"
+            class="spinner-border spinner-border-sm"
+          ></div>
+          <ul *ngIf="mentors$ | async as mentors">
+            <li *ngFor="let mentor of mentors">
+              <a [routerLink]="'mentors/' + mentor._id">{{ mentor.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>`,
+  styleUrls: ['home.component.css'],
 })
 export class HomeComponent {
   loading = false;
   users?: User[];
 
-  constructor(private userService: UserService) {}
+  teamsState$ = this.store.select((s: any) => s.team);
+  mentorsState$ = this.store.select((s: any) => s.mentor);
+  mentors$ = this.store.select(allMentors);
+  teams$ = this.store.select(allTeams);
+
+  loadingTeams$ = this.teamsState$.pipe(map((x: any) => x.loading));
+  loadingMentors$ = this.mentorsState$.pipe(map((x: any) => x.loading));
+
+  constructor(
+    private store: Store,
+    private teamService: TeamService,
+    private mentorService: MentorService
+  ) {}
 
   ngOnInit() {
-    this.loading = true;
-    this.loadAllUsers();
+    this.updateMentors();
+    this.updateTeams();
   }
 
-  loadAllUsers() {
-    this.userService
-      .getUsers()
-      .pipe(first())
-      .subscribe((users) => {
-        this.loading = false;
-        this.users = users;
-      });
+  updateTeams() {
+    this.teamService.getTeams();
+  }
+
+  updateMentors() {
+    this.mentorService.getMentors();
   }
 }

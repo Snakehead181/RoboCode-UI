@@ -21,4 +21,11 @@ export class TeamService {
     console.log('Add Team');
     return this.httpClient.post('http://localhost:3000/teams', team);
   }
+
+  removeTeam(teamId: string) {
+    console.log(teamId);
+    return this.httpClient
+      .delete('http://localhost:3000/teams/' + teamId)
+      .subscribe(() => console.log('User Deleted'));
+  }
 }

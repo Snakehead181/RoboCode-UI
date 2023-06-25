@@ -2,8 +2,6 @@
   background-color: black;
   color: #00ff41;
   border-color: #00ff41;
-  display: flex;
-  justify-content: space-between;
 }
 
 input,

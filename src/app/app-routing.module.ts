@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'mentors/:id', component: MentorComponent },
   { path: 'teams', component: TeamsComponent },
   { path: 'teams/:id', component: TeamComponent },
+  { path: 'teams/:id/edit', component: TeamComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: '' },
 ];

@@ -17,8 +17,6 @@ import { StoreModule } from '@ngrx/store';
 import { MentorService, TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
-import { teamReducer } from './state/teams/teams.reducer';
-import { mentorReducer } from './state/mentors/mentors.reducer';
 import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
 import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
@@ -26,6 +24,8 @@ import { MentorComponent } from './mentors/mentor/mentor.component';
 import { TeamsComponent } from './teams/teams.component';
 import { RegisterTeamComponent } from './teams/register-team/register-team.component';
 import { TeamComponent } from './teams/team/team.component';
+import { TeamPlacementComponent } from './leaderboard/team-placement.component';
+import { EditTeamComponent } from './teams/edit-team/edit-team.component';
 
 @NgModule({
   imports: [
@@ -49,6 +49,8 @@ import { TeamComponent } from './teams/team/team.component';
     TeamsComponent,
     TeamComponent,
     RegisterTeamComponent,
+    TeamPlacementComponent,
+    EditTeamComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

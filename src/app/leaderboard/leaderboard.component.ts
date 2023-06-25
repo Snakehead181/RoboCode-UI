@@ -15,20 +15,7 @@ import { map } from 'rxjs';
       </div>
     </div>
     <div *ngIf="teams$ | async as data">
-      <div id="profile">
-        <div class="flex" *ngFor="let team of data">
-          <div class="item">
-            <tank tankColor="{{ team.color }}"></tank>
-            <div class="info">
-              <div class="name">{{ team.name }}</div>
-              <span class="team-number">Team {{ team.number }}</span>
-            </div>
-          </div>
-          <div class="item">
-            <span>{{ team.score }}</span>
-          </div>
-        </div>
-      </div>
+      <team-placement [data]="data"></team-placement>
     </div>
   </div> `,
   styleUrls: ['leaderboard.component.css'],

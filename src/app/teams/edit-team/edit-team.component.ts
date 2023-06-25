@@ -12,9 +12,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
     <ng-container *ngIf="team$ | async as team">
       <div class="card-header">
         <h4>{{ team.name }}</h4>
-        <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-          Edit Team
-        </button>
+        <button type="button" class="btn btn-primary">Edit Team</button>
         <button type="button" class="btn btn-primary" (click)="removeTeam()">
           Remove Team
         </button>
@@ -41,16 +39,12 @@ import { teamById } from 'src/app/state/teams/teams.selector';
               </li>
             </ul>
           </div>
-          <div class="column">
-            <team-placement [team]="team"></team-placement>
-          </div>
         </div>
       </div>
     </ng-container>
   </div>`,
-  styleUrls: ['team.component.css'],
 })
-export class TeamComponent {
+export class EditTeamComponent {
   team: Team;
 
   constructor(

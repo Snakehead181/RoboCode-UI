@@ -6,6 +6,7 @@ import { Subscription, catchError, of } from 'rxjs';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { Store } from '@ngrx/store';
 import { allTeams } from 'src/app/state/teams/teams.selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'register-team',
@@ -65,25 +66,31 @@ import { allTeams } from 'src/app/state/teams/teams.selector';
 export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
   allTeams$ = this.store.select(allTeams);
+  teamForm: FormGroup;
+  mentorForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private mentorService: MentorService,
     private teamService: TeamService,
     private toastService: ToastService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.mentorService.getMentors();
   }
 
-  teamForm = this.fb.group({
-    name: ['', Validators.required],
-    number: [''],
-    score: [0],
-    color: [''],
-    assignedMentor: ['', Validators.required],
+  team$ = this.allTeams$.subscribe((teams) => {
+    let teamNumber: string = teams.length.toString() + 1;
+    this.teamForm = this.fb.group({
+      name: ['', Validators.required],
+      number: [teamNumber],
+      score: [0],
+      color: [''],
+      assignedMentor: ['', Validators.required],
+    });
   });
 
   submit() {
@@ -91,6 +98,7 @@ export class RegisterTeamComponent implements OnInit {
     this.teamForm.markAllAsTouched();
     if (this.teamForm.valid) {
       let formValues = this.teamForm.getRawValue();
+      console.log(formValues);
       let result$ = this.teamService.addTeam(formValues);
       result$
         .pipe(
@@ -114,7 +122,7 @@ export class RegisterTeamComponent implements OnInit {
           }
         });
       this.teamForm.reset();
-      this.teamService.getTeams();
+      this.router.navigateByUrl('teams');
     }
   }
 }
