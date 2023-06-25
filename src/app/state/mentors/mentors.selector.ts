@@ -15,3 +15,12 @@ export const mentorById = createSelector(
   allMentors,
   (mentors: Mentor[], id: string) => mentors.find((mentor) => mentor._id === id)
 );
+
+export const freeMentors = createSelector(allMentors, (mentors: Mentor[]) => {
+  return mentors.filter((m) => {
+    if (m.assignedTeam === '') {
+      return true;
+    }
+    return false;
+  });
+});

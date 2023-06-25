@@ -22,6 +22,12 @@ import { AuthenticationService } from './services';
         >
         <a
           class="nav-item nav-link"
+          routerLink="/teams"
+          routerLinkActive="active"
+          >Teams</a
+        >
+        <a
+          class="nav-item nav-link"
           routerLink="/leaderboard"
           routerLinkActive="active"
           >Leaderboard</a

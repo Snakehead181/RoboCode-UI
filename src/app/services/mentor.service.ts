@@ -37,4 +37,11 @@ export class MentorService {
         this.store.dispatch(MentorLoaded({ data: a as Mentor }));
       });
   }
+
+  updateMentor(mentor: Mentor) {
+    return this.httpClient.put(
+      'http://localhost:3000/mentors' + mentor._id,
+      mentor
+    );
+  }
 }

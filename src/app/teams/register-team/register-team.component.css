@@ -1,0 +1,32 @@
+.card-header {
+  background-color: black;
+  color: #00ff41;
+  border-color: #00ff41;
+}
+
+input,
+button,
+select,
+.card {
+  background-color: black;
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+.card {
+  margin: 15px;
+}
+
+input:focus {
+  background-color: black;
+  cursor: #00ff41;
+  color: #00ff41;
+}
+
+label {
+  color: #00ff41;
+}
+
+button:hover {
+  background-color: #202020;
+}

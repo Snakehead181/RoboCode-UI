@@ -16,4 +16,9 @@ export class TeamService {
       this.store.dispatch(TeamsLoaded({ data: res }));
     });
   }
+
+  addTeam(team) {
+    console.log('Add Team');
+    return this.httpClient.post('http://localhost:3000/teams', team);
+  }
 }

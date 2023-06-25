@@ -23,6 +23,9 @@ import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
 import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
 import { MentorComponent } from './mentors/mentor/mentor.component';
+import { TeamsComponent } from './teams/teams.component';
+import { RegisterTeamComponent } from './teams/register-team/register-team.component';
+import { TeamComponent } from './teams/team/team.component';
 
 @NgModule({
   imports: [
@@ -43,6 +46,9 @@ import { MentorComponent } from './mentors/mentor/mentor.component';
     MentorsComponent,
     RegisterMentorComponent,
     MentorComponent,
+    TeamsComponent,
+    TeamComponent,
+    RegisterTeamComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

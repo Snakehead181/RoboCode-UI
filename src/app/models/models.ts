@@ -13,6 +13,7 @@ export interface Team {
   number: string;
   color: string;
   score: number;
+  assignedMentor: string;
 }
 
 export interface Mentor {
