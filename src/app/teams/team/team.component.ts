@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
 import { Team } from 'src/app/models';
@@ -28,8 +28,8 @@ import { teamById } from 'src/app/state/teams/teams.selector';
                 <div>{{ team.name }}</div>
               </li>
               <li class="list-group-item">
-                <div>Number:</div>
-                <div>{{ team.number }}</div>
+                <div>Table Number:</div>
+                <div>{{ team.tableNumber }}</div>
               </li>
               <li class="list-group-item">
                 <div>Color:</div>
@@ -42,7 +42,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
             </ul>
           </div>
           <div class="column">
-            <team-placement [team]="team"></team-placement>
+            <team-display [team]="team"></team-display>
           </div>
         </div>
       </div>

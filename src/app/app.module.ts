@@ -12,20 +12,18 @@ import { BasicAuthInterceptor, ErrorInterceptor } from './helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { TankComponent } from './leaderboard/tank.component';
 import { StoreModule } from '@ngrx/store';
-import { MentorService, TeamService } from './services';
+import { MentorService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
 import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
 import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
 import { MentorComponent } from './mentors/mentor/mentor.component';
-import { TeamsComponent } from './teams/teams.component';
-import { RegisterTeamComponent } from './teams/register-team/register-team.component';
-import { TeamComponent } from './teams/team/team.component';
-import { TeamPlacementComponent } from './leaderboard/team-placement.component';
 import { EditTeamComponent } from './teams/edit-team/edit-team.component';
+import { TeamsModule } from './teams/teams.module';
+import { GlobalComponentModule } from './global/components/global-components.module';
+import { MentorsModule } from './mentors/mentors.module';
 
 @NgModule({
   imports: [
@@ -35,6 +33,9 @@ import { EditTeamComponent } from './teams/edit-team/edit-team.component';
     AppRoutingModule,
     StoreModule.forRoot(rootReducer),
     CommonModule,
+    TeamsModule,
+    GlobalComponentModule,
+    MentorsModule,
   ],
 
   declarations: [
@@ -42,20 +43,10 @@ import { EditTeamComponent } from './teams/edit-team/edit-team.component';
     HomeComponent,
     LoginComponent,
     LeaderboardComponent,
-    TankComponent,
-    MentorsComponent,
-    RegisterMentorComponent,
-    MentorComponent,
-    TeamsComponent,
-    TeamComponent,
-    RegisterTeamComponent,
-    TeamPlacementComponent,
-    EditTeamComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    TeamService,
     UserService,
     MentorService,
     // provider used to create fake backend

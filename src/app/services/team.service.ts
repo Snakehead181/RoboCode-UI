@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoadTeams, TeamsLoaded } from '../state/teams/teams.actions';
 import { Store } from '@ngrx/store';
+import { Team } from '../models';
 
 @Injectable()
 export class TeamService {
@@ -27,5 +28,10 @@ export class TeamService {
     return this.httpClient
       .delete('http://localhost:3000/teams/' + teamId)
       .subscribe(() => console.log('User Deleted'));
+  }
+
+  updateTeam(id: string, team: Team) {
+    console.log('Update Team');
+    return this.httpClient.put('http://localhost:3000/teams/' + id, team);
   }
 }

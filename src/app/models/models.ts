@@ -10,7 +10,7 @@ export interface User {
 export interface Team {
   _id: string;
   name: string;
-  number: string;
+  tableNumber: string;
   color: string;
   score: number;
   assignedMentor: string;

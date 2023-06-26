@@ -15,7 +15,7 @@ import { map } from 'rxjs';
       </div>
     </div>
     <div *ngIf="teams$ | async as data">
-      <team-placement [data]="data"></team-placement>
+      <team-display [data]="data"></team-display>
     </div>
   </div> `,
   styleUrls: ['leaderboard.component.css'],

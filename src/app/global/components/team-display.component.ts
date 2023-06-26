@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Team } from '../models';
+import { Component, Input } from '@angular/core';
+import { Team } from 'src/app/models';
 
 @Component({
-  selector: 'team-placement',
+  selector: 'team-display',
   template: ` <ng-container
       *ngIf="data; then allTeams; else singleTeam"
     ></ng-container>
@@ -14,7 +14,7 @@ import { Team } from '../models';
             <tank tankColor="{{ team.color }}"></tank>
             <div class="info">
               <div class="name">{{ team.name }}</div>
-              <span class="team-number">Team {{ team.number }}</span>
+              <span class="team-number">Table {{ team.tableNumber }}</span>
             </div>
           </div>
           <div class="item">
@@ -30,7 +30,7 @@ import { Team } from '../models';
             <tank tankColor="{{ team?.color }}"></tank>
             <div class="info">
               <div class="name">{{ team?.name }}</div>
-              <span class="team-number">Team {{ team?.number }}</span>
+              <span class="team-number">Table {{ team?.tableNumber }}</span>
             </div>
           </div>
           <div class="item">
@@ -40,7 +40,7 @@ import { Team } from '../models';
       </div>
     </ng-template>`,
 })
-export class TeamPlacementComponent {
+export class TeamDisplayComponent {
   @Input()
   data?: Team[];
 

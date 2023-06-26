@@ -25,13 +25,11 @@ import { Router } from '@angular/router';
             <input type="text" formControlName="name" class="form-control" />
           </div>
           <div class="mb-3">
-            <label class="form-label">Number</label>
+            <label class="form-label">Table Number</label>
             <input
               type="text"
-              formControlName="number"
+              formControlName="tableNumber"
               class="form-control"
-              [value]="(allTeams$ | async)!.length + 1"
-              readonly
             />
           </div>
           <div class="mb-3">
@@ -66,8 +64,6 @@ import { Router } from '@angular/router';
 export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
   allTeams$ = this.store.select(allTeams);
-  teamForm: FormGroup;
-  mentorForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -82,15 +78,12 @@ export class RegisterTeamComponent implements OnInit {
     this.mentorService.getMentors();
   }
 
-  team$ = this.allTeams$.subscribe((teams) => {
-    let teamNumber: string = teams.length.toString() + 1;
-    this.teamForm = this.fb.group({
-      name: ['', Validators.required],
-      number: [teamNumber],
-      score: [0],
-      color: [''],
-      assignedMentor: ['', Validators.required],
-    });
+  teamForm = this.fb.group({
+    name: ['', Validators.required],
+    tableNumber: [''],
+    score: [0],
+    color: [''],
+    assignedMentor: ['', Validators.required],
   });
 
   submit() {
