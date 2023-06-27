@@ -7,7 +7,7 @@ import {
 } from '../state/achievements/achievements.actions';
 
 @Injectable()
-export class AchievementService {
+export class AchievementsService {
   constructor(private httpClient: HttpClient, private store: Store) {}
 
   getAchievements() {

@@ -10,7 +10,7 @@ import { allTeams } from '../state/teams/teams.selector';
 @Component({
   selector: 'home',
   template: `<div class="card mt-4">
-    <h4 class="card-header">Welcome to RoboCode 2023</h4>
+    <h4 class="card-header">Welcome to RoboRumble 2023</h4>
     <div class="card-body">
       <div class="row">
         <div class="column">

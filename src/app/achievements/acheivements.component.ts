@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
-import { MentorService } from '../services/mentor.service';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { allAchievements } from '../state/achievements/achivements.selector';
+import { AchievementsService } from '../services';
 
 @Component({
   selector: 'achievements',
-  template: `<div class="card mt-4">
+  template: ` <div class="card">
     <h4 class="card-header">Achievements</h4>
-    <div class="card-body">
-      <div *ngIf="achievements$ | async as Achievements">
-        <div *ngFor="let achievement of Achievements">
-          <achievement-card [achievement]="achievement"></achievement-card>
-        </div>
+
+    <div *ngIf="achievements$ | async as Achievements">
+      <div class="row card-group">
+        <achievement-card
+          class="col-3"
+          *ngFor="let achievement of Achievements"
+          [achievement]="achievement"
+        ></achievement-card>
       </div>
     </div>
   </div>`,
@@ -22,13 +25,16 @@ export class AchievementsComponent {
   achievements$ = this.store.select(allAchievements);
   loading$ = this.achievementsState$.pipe(map((x: any) => x.loading));
 
-  constructor(private mentorService: MentorService, private store: Store) {}
+  constructor(
+    private achievementsService: AchievementsService,
+    private store: Store
+  ) {}
 
   ngOnInit() {
-    this.updateMentors();
+    this.getAchievements();
   }
 
-  updateMentors() {
-    this.mentorService.getMentors();
+  getAchievements() {
+    this.achievementsService.getAchievements();
   }
 }

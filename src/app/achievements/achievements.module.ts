@@ -6,6 +6,7 @@ import { AchievementCardComponent } from './achievement-card/achievement.compone
 import { ACHIEVEMENTS_ROUTES } from './achievements.routes';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AchievementsService } from '../services';
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(ACHIEVEMENTS_ROUTES)],
@@ -15,6 +16,6 @@ import { CommonModule } from '@angular/common';
     AchievementComponent,
     AchievementCardComponent,
   ],
-  providers: [],
+  providers: [AchievementsService],
 })
 export class AcheivementsModule {}

@@ -1,3 +1,5 @@
+import { AchievementType } from './types';
+
 export interface User {
   id: number;
   username: string;
@@ -29,5 +31,6 @@ export interface Achievement {
   name: string;
   description: string;
   points: number;
-  RequiresVerification: boolean;
+  requiresVerification: boolean;
+  achievementType: AchievementType;
 }
