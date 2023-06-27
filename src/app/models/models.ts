@@ -23,3 +23,11 @@ export interface Mentor {
   password: string;
   assignedTeam: string;
 }
+
+export interface Achievement {
+  _id: string;
+  name: string;
+  description: string;
+  points: number;
+  RequiresVerification: boolean;
+}
