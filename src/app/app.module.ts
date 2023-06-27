@@ -24,6 +24,7 @@ import { EditTeamComponent } from './teams/edit-team/edit-team.component';
 import { TeamsModule } from './teams/teams.module';
 import { GlobalComponentModule } from './global/components/global-components.module';
 import { MentorsModule } from './mentors/mentors.module';
+import { AcheivementsModule } from './achievements/achievements.module';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { MentorsModule } from './mentors/mentors.module';
     TeamsModule,
     GlobalComponentModule,
     MentorsModule,
+    AcheivementsModule,
   ],
 
   declarations: [

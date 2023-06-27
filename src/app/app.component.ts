@@ -32,6 +32,12 @@ import { AuthenticationService } from './services';
           routerLinkActive="active"
           >Leaderboard</a
         >
+        <a
+          class="nav-item nav-link"
+          routerLink="/achievements"
+          routerLinkActive="active"
+          >Achievements</a
+        >
         <button class="btn btn-link nav-item nav-link" (click)="logout()">
           Logout
         </button>

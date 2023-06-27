@@ -127,14 +127,14 @@ export class EditTeamComponent {
   );
 
   removeTeam() {
-    console.log('Delete Team');
     console.log(this.team._id);
     this.teamService.removeTeam(this.team._id);
     this.router.navigateByUrl('/teams');
   }
 
+  updateTeamDisplay() {}
+
   submit() {
-    console.log('Submit');
     this.editTeamForm.markAllAsTouched();
     if (this.editTeamForm.valid) {
       let formValues = this.editTeamForm.getRawValue();
