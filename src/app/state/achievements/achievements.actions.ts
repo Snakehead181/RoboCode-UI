@@ -1,13 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-import { Team } from 'src/app/models';
+import { Achievement, Team } from 'src/app/models';
 
-export const LoadAchievements = createAction('loadTeams');
+export const LoadAchievements = createAction('loadAchievements');
 
 export const AchievementsLoaded = createAction(
   'achievementsLoaded',
-  props<{ data: Team[] }>()
+  props<{ data: Achievement[] }>()
 );
 export const AchievementLoaded = createAction(
   'achievementLoaded',
-  props<{ data: Team }>()
+  props<{ data: Achievement }>()
 );

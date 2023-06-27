@@ -1,4 +1,4 @@
-import { Achievement, Team } from 'src/app/models';
+import { Achievement } from 'src/app/models';
 import { createReducer, on } from '@ngrx/store';
 import {
   AchievementLoaded,
@@ -11,35 +11,37 @@ export interface AchievementState {
   achievements: Achievement[];
 }
 
-export const initialTeamState: AchievementState = {
+export const initialAchievementState: AchievementState = {
   loading: false,
   achievements: [],
 };
 
-export const teamReducer = createReducer(
-  initialTeamState,
+export const achievementReducer = createReducer(
+  initialAchievementState,
   on(LoadAchievements, (oldState: AchievementState) => {
     console.log('LoadAchievements');
     return {
       ...oldState,
       loading: true,
-      teams: [],
+      achievements: [],
     };
   }),
   on(AchievementsLoaded, (oldState: AchievementState, { data }) => {
     console.log('AchievementsLoaded');
-    console.log('Data');
     return {
       ...oldState,
       loading: false,
-      teams: data,
+      achievements: data,
     };
   }),
   on(AchievementLoaded, (oldState: AchievementState, { data }) => {
     console.log('AchievementLoaded');
     return {
       ...oldState,
-      teams: [...oldState.achievements.filter((a) => a._id !== data._id), data],
+      achievements: [
+        ...oldState.achievements.filter((a) => a._id !== data._id),
+        data,
+      ],
     };
   })
 );
