@@ -10,9 +10,3 @@ export const allAchievements = createSelector(
     return state.achievements;
   }
 );
-
-export const teamById = createSelector(
-  allAchievements,
-  (achievements: Achievement[], id: string) =>
-    achievements.find((team) => team._id === id)
-);

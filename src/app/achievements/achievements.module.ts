@@ -5,9 +5,10 @@ import { AchievementComponent } from './achievement/achievement.component';
 import { AchievementCardComponent } from './achievement-card/achievement.component';
 import { ACHIEVEMENTS_ROUTES } from './achievements.routes';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [RouterModule.forChild(ACHIEVEMENTS_ROUTES)],
+  imports: [CommonModule, RouterModule.forChild(ACHIEVEMENTS_ROUTES)],
   exports: [],
   declarations: [
     AchievementsComponent,

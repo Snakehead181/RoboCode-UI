@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Achievement } from 'src/app/models';
 
 @Component({
   selector: 'achievement-card',
@@ -13,6 +14,9 @@ import { Component, OnInit } from '@angular/core';
   </div>`,
 })
 export class AchievementCardComponent implements OnInit {
+  @Input()
+  achievement: Achievement;
+
   constructor() {}
 
   ngOnInit() {}
