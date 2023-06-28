@@ -23,3 +23,9 @@ h1 {
 .bi-gear:hover {
   cursor: pointer;
 }
+.card-title {
+  margin: 0px 30px;
+}
+.desc {
+  margin: 20px 35px;
+}

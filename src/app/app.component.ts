@@ -44,7 +44,7 @@ import { AuthenticationService } from './services';
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container-fluid">
       <router-outlet></router-outlet>
     </div>
     <toast-container aria-live="polite" aria-atomic="true"></toast-container>

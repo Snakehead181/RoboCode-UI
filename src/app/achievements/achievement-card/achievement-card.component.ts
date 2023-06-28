@@ -5,7 +5,7 @@ import { Achievement } from 'src/app/models';
   selector: 'achievement-card',
   template: ` <div class="card">
     <div class="card-body">
-      <div class="top-part">
+      <div class="top-part centered">
         <i
           *ngIf="achievement.requiresVerification"
           class="bi bi-exclamation-circle"
@@ -18,7 +18,7 @@ import { Achievement } from 'src/app/models';
           [routerLink]="achievement._id"
         ></i>
       </div>
-      <p class="card-text centered">
+      <p class="card-text centered desc">
         {{ achievement.description }}
       </p>
       <p class="card-text centered" style="font-size: 15px">

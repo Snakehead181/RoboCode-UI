@@ -124,7 +124,7 @@ export class CreateAchievementsComponent implements OnInit {
         .pipe(
           catchError((err) => {
             return of({
-              errorMessage: 'Adding a team failed',
+              errorMessage: 'Creating an Achievement failed',
               err,
             });
           })
@@ -133,11 +133,11 @@ export class CreateAchievementsComponent implements OnInit {
           if (result.errorMessage) {
             console.log(result.errorMessage);
             this.toastService.danger({
-              text: 'Failed to add team',
+              text: 'Failed to Create Achievement',
             });
           } else {
             this.toastService.success({
-              text: 'Team Added',
+              text: 'Achievement Created',
             });
           }
         });
