@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
-import { Team } from 'src/app/models';
-import { TeamService } from 'src/app/services';
+import { Mentor, Team } from 'src/app/models';
+import { MentorService, TeamService } from 'src/app/services';
+import { allMentors } from 'src/app/state/mentors/mentors.selector';
 import { teamById } from 'src/app/state/teams/teams.selector';
 
 @Component({
@@ -51,13 +52,16 @@ import { teamById } from 'src/app/state/teams/teams.selector';
   styleUrls: ['team.component.css'],
 })
 export class TeamComponent {
+  allMentors$ = this.store.select(allMentors);
+  mentorValues: Mentor;
   team: Team;
 
   constructor(
     private store: Store,
     private route: ActivatedRoute,
     private router: Router,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private mentorService: MentorService
   ) {
     this.teamService.getTeamDetails(this.route.snapshot.params['id']);
   }
@@ -81,6 +85,36 @@ export class TeamComponent {
     console.log('Delete Team');
     console.log(this.team._id);
     this.teamService.removeTeam(this.team._id);
+    let teamRemovedFromMentor = this.getMentor(this.team);
+    console.log(teamRemovedFromMentor);
+    this.mentorService.updateMentor(teamRemovedFromMentor);
     this.router.navigateByUrl('/teams');
+  }
+
+  removeTeamFromMentor() {}
+
+  getMentor(formValues): Mentor {
+    this.allMentors$.subscribe((mentors) => {
+      for (let mentor of mentors) {
+        if (mentor.name === formValues.assignedMentor) {
+          console.log(mentor);
+          return (this.mentorValues = {
+            _id: mentor._id,
+            name: mentor.name,
+            username: mentor.username,
+            password: mentor.password,
+            assignedTeam: 'No Team Assigned',
+          });
+        }
+      }
+      return (this.mentorValues = {
+        _id: '',
+        name: '',
+        assignedTeam: '',
+        username: '',
+        password: '',
+      });
+    });
+    return this.mentorValues;
   }
 }
