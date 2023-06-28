@@ -43,8 +43,14 @@ export class AchievementsService {
 
   updateAchievement(achievement: Achievement) {
     return this.httpClient.put(
-      'http://localhost:3000/mentors' + achievement._id,
+      'http://localhost:3000/achievements/' + achievement._id,
       achievement
+    );
+  }
+
+  deleteAchievement(achievementId: string) {
+    return this.httpClient.delete(
+      'http://localhost:3000/achievements' + achievementId
     );
   }
 }

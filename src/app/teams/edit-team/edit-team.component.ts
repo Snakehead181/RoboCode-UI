@@ -128,14 +128,6 @@ export class EditTeamComponent {
     )
   );
 
-  removeTeam() {
-    console.log(this.team._id);
-    this.teamService.removeTeam(this.team._id);
-    this.router.navigateByUrl('/teams');
-  }
-
-  updateTeamDisplay() {}
-
   submit() {
     this.editTeamForm.markAllAsTouched();
     if (this.editTeamForm.valid) {

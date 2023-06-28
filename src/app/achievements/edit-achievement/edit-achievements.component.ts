@@ -15,7 +15,7 @@ import {
   selector: 'create-achievements',
   template: `<div class="card">
     <div class="card-header">
-      <h4>Achievements</h4>
+      <h4>Editing Achievement</h4>
       <button
         type="button"
         class="btn btn-primary"
@@ -25,61 +25,73 @@ import {
         Save Achievement
       </button>
     </div>
-    <form id="achievement-form" [formGroup]="achievementForm">
-      <div class="mb-3">
-        <label class="form-label">Achievement Name</label>
-        <input type="text" formControlName="name" class="form-control" />
+    <div class="row">
+      <div class="column">
+        <form id="achievement-form" [formGroup]="achievementForm">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div>Name:</div>
+              <input type="text" formControlName="name" class="form-control" />
+            </li>
+            <li class="list-group-item">
+              <div>Description:</div>
+              <input
+                type="text"
+                formControlName="description"
+                class="form-control"
+              />
+            </li>
+            <li class="list-group-item">
+              <div>Points:</div>
+              <input
+                type="text"
+                formControlName="points"
+                class="form-control"
+              />
+            </li>
+            <li class="list-group-item">
+              <div>Achievement Type:</div>
+              <select
+                id="achievementType"
+                class="form-select"
+                formControlName="achievementType"
+              >
+                <option *ngFor="let type of achievementTypes" [ngValue]="type">
+                  {{ type }}
+                </option>
+              </select>
+            </li>
+            <li class="list-group-item">
+              <div>Requires Verification:</div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [value]="true"
+                  id="true-radio"
+                  formControlName="requiresVerification"
+                />
+                <label class="form-check-label" for="true-radio"> Yes </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  [value]="false"
+                  id="false-radio"
+                  formControlName="requiresVerification"
+                />
+                <label class="form-check-label" for="false-radio"> No </label>
+              </div>
+            </li>
+          </ul>
+        </form>
       </div>
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <input type="text" formControlName="description" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label class="form-label">points</label>
-        <input type="number" formControlName="points" class="form-control" />
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="achievementTypes"
-          >Achievement Type</label
-        >
-        <select
-          id="achievementTypes"
-          class="form-select"
-          formControlName="achievementType"
-        >
-          <option *ngFor="let type of achievementTypes" [ngValue]="type">
-            {{ type }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Requires Verification</label>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            value="true"
-            id="true-radio"
-            formControlName="requiresVerification"
-          />
-          <label class="form-check-label" for="true-radio"> Yes </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            value="false"
-            id="false-radio"
-            formControlName="requiresVerification"
-          />
-          <label class="form-check-label" for="false-radio"> No </label>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>`,
   styleUrls: ['../achievements.component.css'],
 })
-export class EditAchievementComponent implements OnInit {
+export class EditAchievementComponent {
   achievementsState$ = this.store.select((s: any) => s.achievement);
   achievements$ = this.store.select(allAchievements);
   loading$ = this.achievementsState$.pipe(map((x: any) => x.loading));
@@ -97,27 +109,6 @@ export class EditAchievementComponent implements OnInit {
 
   achievementForm: FormGroup;
 
-  constructor(
-    private store: Store,
-    private achievementsService: AchievementsService,
-    private fb: FormBuilder,
-    private toastService: ToastService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    this.achievementsService.getAchievementDetails(route.snapshot.params['id']);
-
-    this.achievementSub = this.achievements$.subscribe((achievement) => {
-      this.achievementForm = this.fb.group({
-        name: [achievement, Validators.required],
-        description: [''],
-        points: [0],
-        achievementType: [''],
-        requiresVerification: ['', Validators.required],
-      });
-    });
-  }
-
   achievement$ = this.route.params.pipe(
     switchMap((p) =>
       this.store.pipe(
@@ -133,20 +124,35 @@ export class EditAchievementComponent implements OnInit {
     )
   );
 
-  ngOnInit() {
-    this.getAchievements();
-  }
+  constructor(
+    private store: Store,
+    private achievementsService: AchievementsService,
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.achievementsService.getAchievementDetails(route.snapshot.params['id']);
 
-  getAchievements() {
-    this.achievementsService.getAchievements();
+    this.achievementSub = this.achievement$.subscribe((achievement) => {
+      this.achievementForm = this.fb.group({
+        _id: [achievement?._id],
+        name: [achievement?.name, Validators.required],
+        description: [achievement?.description],
+        points: [achievement?.points],
+        achievementType: [achievement?.achievementType],
+        requiresVerification: [
+          achievement?.requiresVerification,
+          Validators.required,
+        ],
+      });
+    });
   }
 
   submit() {
-    console.log('submit');
     this.achievementForm.markAllAsTouched();
     if (this.achievementForm.valid) {
       let formValues = this.achievementForm.getRawValue();
-      console.log(formValues);
       let result$ = this.achievementsService.updateAchievement(formValues);
       result$
         .pipe(
@@ -170,7 +176,7 @@ export class EditAchievementComponent implements OnInit {
           }
         });
       this.achievementForm.reset();
-      this.router.navigateByUrl('achievements');
+      this.router.navigateByUrl('achievements/' + this.achievement._id);
     }
   }
 }
