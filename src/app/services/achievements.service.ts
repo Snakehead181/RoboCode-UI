@@ -49,8 +49,8 @@ export class AchievementsService {
   }
 
   deleteAchievement(achievementId: string) {
-    return this.httpClient.delete(
-      'http://localhost:3000/achievements' + achievementId
-    );
+    return this.httpClient
+      .delete('http://localhost:3000/achievements/' + achievementId)
+      .subscribe(() => console.log('Achievement Deleted'));
   }
 }

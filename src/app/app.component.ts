@@ -47,6 +47,7 @@ import { AuthenticationService } from './services';
     <div class="container">
       <router-outlet></router-outlet>
     </div>
+    <toast-container aria-live="polite" aria-atomic="true"></toast-container>
   </html>`,
   styles: [
     `

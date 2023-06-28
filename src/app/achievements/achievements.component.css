@@ -66,11 +66,16 @@ input:focus {
   margin: auto 0px;
 }
 
-input,
+input[type="text"],
+input[type="number"],
 select {
   width: 50%;
 }
 
 .form-check-input {
   flex-shrink: 0;
+}
+
+.col-6 {
+  margin: auto;
 }

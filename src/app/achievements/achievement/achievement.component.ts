@@ -99,7 +99,7 @@ export class AchievementComponent {
   }
 
   removeAchievement() {
-    console.log('Delete Team');
+    console.log('Delete Achievement');
     this.achievementsService.deleteAchievement(this.achievement._id);
     this.router.navigateByUrl('/achievements');
   }

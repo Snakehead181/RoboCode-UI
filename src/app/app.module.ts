@@ -25,6 +25,7 @@ import { TeamsModule } from './teams/teams.module';
 import { GlobalComponentModule } from './global/components/global-components.module';
 import { MentorsModule } from './mentors/mentors.module';
 import { AcheivementsModule } from './achievements/achievements.module';
+import { ToastModule } from './global/toast/toast.module';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AcheivementsModule } from './achievements/achievements.module';
     GlobalComponentModule,
     MentorsModule,
     AcheivementsModule,
+    ToastModule,
   ],
 
   declarations: [
