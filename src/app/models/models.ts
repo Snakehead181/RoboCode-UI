@@ -32,5 +32,5 @@ export interface Achievement {
   description: string;
   points: number;
   requiresVerification: boolean;
-  achievementType: AchievementType;
+  achievementType: string;
 }

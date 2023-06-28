@@ -31,7 +31,7 @@ export class MentorService {
 
   getMentorDetails(mentorId: string) {
     this.httpClient
-      .get('http://localhost:3000/mentors' + mentorId)
+      .get('http://localhost:3000/mentors/' + mentorId)
       .subscribe((a) => {
         console.log('getMentor', { a });
         this.store.dispatch(MentorLoaded({ data: a as Mentor }));

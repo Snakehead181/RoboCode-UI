@@ -6,9 +6,18 @@ import { AchievementsService } from '../services';
 
 @Component({
   selector: 'achievements',
-  template: ` <div class="card">
-    <h4 class="card-header">Achievements</h4>
-
+  template: `<div class="card">
+    <div class="card-header">
+      <h4>Achievements</h4>
+      <button type="button" class="btn btn-primary" [routerLink]="['create']">
+        Create Achievement
+      </button>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="loading$ | async">
+      <div class="spinner-border" style="margin: 15px;" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div *ngIf="achievements$ | async as Achievements">
       <div class="row card-group">
         <achievement-card
@@ -19,6 +28,7 @@ import { AchievementsService } from '../services';
       </div>
     </div>
   </div>`,
+  styleUrls: ['achievements.component.css'],
 })
 export class AchievementsComponent {
   achievementsState$ = this.store.select((s: any) => s.achievement);

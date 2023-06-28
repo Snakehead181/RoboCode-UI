@@ -3,6 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
 import { Mentor } from 'src/app/models';
+import { MentorService } from 'src/app/services';
 import { mentorById } from 'src/app/state/mentors/mentors.selector';
 
 @Component({
@@ -37,7 +38,13 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
   styleUrls: ['mentor.component.css'],
 })
 export class MentorComponent implements OnInit {
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  constructor(
+    private store: Store,
+    private route: ActivatedRoute,
+    private mentorService: MentorService
+  ) {
+    this.mentorService.getMentorDetails(this.route.snapshot.params['id']);
+  }
 
   mentor$ = this.route.params.pipe(
     switchMap((p) =>

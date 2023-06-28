@@ -100,6 +100,8 @@ export class EditTeamComponent {
     private teamService: TeamService,
     private fb: FormBuilder
   ) {
+    this.teamService.getTeamDetails(route.snapshot.params['id']);
+
     this.teamSub = this.team$.subscribe((team) => {
       this.editTeamForm = fb.group({
         name: [team?.name],

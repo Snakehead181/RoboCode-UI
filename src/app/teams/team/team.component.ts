@@ -58,7 +58,9 @@ export class TeamComponent {
     private route: ActivatedRoute,
     private router: Router,
     private teamService: TeamService
-  ) {}
+  ) {
+    this.teamService.getTeamDetails(this.route.snapshot.params['id']);
+  }
 
   team$ = this.route.params.pipe(
     switchMap((p) =>

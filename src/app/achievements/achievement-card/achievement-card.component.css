@@ -6,13 +6,20 @@
 h1 {
   text-align: center;
 }
-i {
+.bi-exclamation-circle {
   position: absolute;
   left: 0;
+}
+.bi-gear {
+  position: absolute;
+  right: 0;
 }
 .centered {
   text-align: center;
 }
 .card {
   margin: 10px;
+}
+.bi-gear:hover {
+  cursor: pointer;
 }

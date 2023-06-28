@@ -1,0 +1,52 @@
+button {
+  background-color: black;
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+button:hover {
+  background-color: #202020;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bi-plus-circle {
+  justify-content: center;
+  font-size: 30px;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+}
+
+.bi-plus-circle:hover {
+  cursor: pointer;
+}
+
+.top-part {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+h1 {
+  text-align: center;
+}
+
+input,
+select {
+  background-color: black;
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+#achievement-form {
+  margin: 20px;
+}
+
+input:focus {
+  background-color: black;
+  cursor: #00ff41;
+  color: #00ff41;
+}

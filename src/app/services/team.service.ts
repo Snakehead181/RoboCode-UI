@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoadTeams, TeamsLoaded } from '../state/teams/teams.actions';
+import {
+  LoadTeams,
+  TeamLoaded,
+  TeamsLoaded,
+} from '../state/teams/teams.actions';
 import { Store } from '@ngrx/store';
 import { Team } from '../models';
 
@@ -16,6 +20,15 @@ export class TeamService {
       console.log('Get Teams Response', { res });
       this.store.dispatch(TeamsLoaded({ data: res }));
     });
+  }
+
+  getTeamDetails(teamId: string): void {
+    this.httpClient
+      .get('http://localhost:3000/teams/' + teamId)
+      .subscribe((t) => {
+        console.log('getTeam', { t });
+        this.store.dispatch(TeamLoaded({ data: t as Team }));
+      });
   }
 
   addTeam(team) {
