@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MentorService } from '../services/mentor.service';
 import { Store } from '@ngrx/store';
 import { allMentors } from '../state/mentors/mentors.selector';

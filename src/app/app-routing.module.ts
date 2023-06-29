@@ -5,6 +5,8 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { AuthGuard } from './helpers';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { AdminGuard } from './helpers/admin.guard';
+import { MentorGuard } from './helpers/mentor.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -12,13 +14,13 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [MentorGuard],
   },
   {
     path: 'mentors',
     loadChildren: () =>
       import('./mentors/mentors.module').then((m) => m.MentorsModule),
-    canActivate: [AuthGuard],
+    canActivate: [AdminGuard],
   },
   {
     path: 'achievements',
@@ -26,13 +28,12 @@ const routes: Routes = [
       import('./achievements/achievements.module').then(
         (m) => m.AcheivementsModule
       ),
-    canActivate: [AuthGuard],
+    canActivate: [AdminGuard],
   },
   {
     path: 'teams',
     loadChildren: () =>
       import('./teams/teams.module').then((m) => m.TeamsModule),
-    canActivate: [AuthGuard],
   },
   // otherwise redirect to home
   { path: '**', redirectTo: '' },

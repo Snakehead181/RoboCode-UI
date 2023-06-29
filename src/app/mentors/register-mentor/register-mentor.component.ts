@@ -57,6 +57,7 @@ export class RegisterMentorComponent {
     username: [''],
     password: [''],
     assignedTeam: [''],
+    role: ['MENTOR'],
   });
 
   submit() {

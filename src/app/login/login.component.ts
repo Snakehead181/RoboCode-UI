@@ -79,25 +79,4 @@ export class LoginComponent implements OnInit {
         },
       });
   }
-
-  onRegister() {
-    this.teamSubmitted = true;
-
-    if (this.teamRegistrationForm.invalid) {
-      return;
-    }
-
-    this.error = '';
-    this.registerLoading = true;
-    this.authenticationService.registerTeam(
-      this.r.teamName.value,
-      this.r.tankColor.value
-    );
-    setTimeout(this.myStopFunction, 1000);
-    this.registerLoading = false;
-  }
-
-  myStopFunction() {
-    return;
-  }
 }

@@ -33,6 +33,7 @@ export class AuthenticationService {
         map((user) => {
           // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
           user.authdata = window.btoa(username + ':' + password);
+          localStorage.setItem('ROLE', user.role);
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
           return user;
@@ -40,17 +41,22 @@ export class AuthenticationService {
       );
   }
 
-  // TODO: Strongly type teamColor to specfic values
-  registerTeam(teamName: string, teamColor: string) {
-    console.log(`Added: ${teamName} of color ${teamColor} to database`);
-    // Add backend api to send to mongoDB
-    return;
-  }
-
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
+    localStorage.removeItem('ROLE');
     this.userSubject.next(null);
     this.router.navigate(['/login']);
+  }
+
+  getRole() {
+    return localStorage.getItem('ROLE');
+  }
+
+  checkRole(role: string) {
+    if (this.getRole() === role) {
+      return true;
+    }
+    return false;
   }
 }

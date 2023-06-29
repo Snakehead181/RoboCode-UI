@@ -10,39 +10,37 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-import { User } from '../models';
+import { Mentor, User } from '../models';
+import { MentorService } from '../services';
+import { Store } from '@ngrx/store';
 
-const users: User[] = [
+const admins: User[] = [
   {
     id: 1,
     username: 'admin',
     password: 'Admin-2023',
     firstName: 'Admin',
     lastName: '2023',
-    authLevel: 'Admin',
+    role: 'ADMIN',
   },
   {
     id: 2,
-    username: 'battle-bots',
-    password: '213',
-    firstName: 'Battle',
-    lastName: 'Bots',
-    authLevel: 'Team',
-  },
-  {
-    id: 3,
     username: 'mentor',
     password: 'Mentor-2023',
     firstName: 'Mentor',
     lastName: '2023',
-    authLevel: 'Admin',
+    role: 'MENTOR',
   },
 ];
+
+// const mentors: Mentor[] = ;
 
 export const TankColors = ['Blue', 'Red', 'Pink', 'Orange', 'Grey'];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+  constructor(private mentorService: MentorService, private store: Store) {}
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -72,21 +70,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function authenticate() {
       const { username, password } = body;
-      const user = users.find(
+      const user = admins.find(
         (x) => x.username === username && x.password === password
       );
       if (!user) return error('Username or password is incorrect');
       return ok({
-        id: user.id,
         username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: user.firstName,
+        role: user.role,
       });
     }
 
     function getUsers() {
       if (!isLoggedIn()) return unauthorized();
-      return ok(users);
+      return ok(admins);
     }
 
     // helper functions

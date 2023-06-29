@@ -195,6 +195,7 @@ export class EditTeamComponent {
             username: mentor.username,
             password: mentor.password,
             assignedTeam: formValues.name,
+            role: mentor.role,
           });
         }
       }
@@ -204,6 +205,7 @@ export class EditTeamComponent {
         assignedTeam: '',
         username: '',
         password: '',
+        role: '',
       });
     });
     return this.mentorValues;

@@ -18,6 +18,7 @@ import { AuthenticationService } from './services';
           class="nav-item nav-link"
           routerLink="/mentors"
           routerLinkActive="active"
+          *ngIf="role('ADMIN')"
           >Mentors</a
         >
         <a
@@ -36,6 +37,7 @@ import { AuthenticationService } from './services';
           class="nav-item nav-link"
           routerLink="/achievements"
           routerLinkActive="active"
+          *ngIf="role('ADMIN')"
           >Achievements</a
         >
         <button class="btn btn-link nav-item nav-link" (click)="logout()">
@@ -66,5 +68,9 @@ export class AppComponent {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  role(role: string) {
+    return this.authenticationService.checkRole(role);
   }
 }

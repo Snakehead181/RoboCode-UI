@@ -3,7 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
 import { Mentor, Team } from 'src/app/models';
-import { MentorService, TeamService } from 'src/app/services';
+import {
+  AuthenticationService,
+  MentorService,
+  TeamService,
+} from 'src/app/services';
 import { allMentors } from 'src/app/state/mentors/mentors.selector';
 import { teamById } from 'src/app/state/teams/teams.selector';
 
@@ -13,12 +17,14 @@ import { teamById } from 'src/app/state/teams/teams.selector';
     <ng-container *ngIf="team$ | async as team">
       <div class="card-header">
         <h4>{{ team.name }}</h4>
-        <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-          Edit Team
-        </button>
-        <button type="button" class="btn btn-primary" (click)="removeTeam()">
-          Remove Team
-        </button>
+        <ng-container *ngIf="getRole() === 'ADMIN'">
+          <button type="button" class="btn btn-primary" [routerLink]="['edit']">
+            Edit Team
+          </button>
+          <button type="button" class="btn btn-primary" (click)="removeTeam()">
+            Remove Team
+          </button>
+        </ng-container>
       </div>
       <div class="card-body">
         <div class="row">
@@ -61,7 +67,8 @@ export class TeamComponent {
     private route: ActivatedRoute,
     private router: Router,
     private teamService: TeamService,
-    private mentorService: MentorService
+    private mentorService: MentorService,
+    private authService: AuthenticationService
   ) {
     this.teamService.getTeamDetails(this.route.snapshot.params['id']);
   }
@@ -81,6 +88,10 @@ export class TeamComponent {
     )
   );
 
+  getRole(): string {
+    return this.authService.getRole() || '';
+  }
+
   removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
@@ -91,8 +102,6 @@ export class TeamComponent {
 
     this.router.navigateByUrl('/teams');
   }
-
-  removeTeamFromMentor() {}
 
   getMentor(formValues): Mentor {
     this.allMentors$.subscribe((mentors) => {
@@ -105,6 +114,7 @@ export class TeamComponent {
             username: mentor.username,
             password: mentor.password,
             assignedTeam: 'No Team Assigned',
+            role: mentor.role,
           });
         }
       }
@@ -114,6 +124,7 @@ export class TeamComponent {
         assignedTeam: '',
         username: '',
         password: '',
+        role: '',
       });
     });
     return this.mentorValues;

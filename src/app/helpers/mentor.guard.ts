@@ -4,14 +4,13 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  ActivatedRoute,
 } from '@angular/router';
 
 import { AuthenticationService } from '../services';
 import { ToastService } from '../global/toast/toast.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class MentorGuard implements CanActivate {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -20,13 +19,16 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const user = this.authenticationService.userValue;
-    const ROLE = this.authenticationService.getRole();
-    if (user && ROLE) {
+    console.log(user);
+    if (user && (user.role === 'ADMIN' || user.role === 'MENTOR')) {
       // logged in so return true
       return true;
     }
 
     // not logged in so redirect to login page with the return url
+    this.toastService.danger({
+      text: 'Cannot Access as Mentor',
+    });
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }

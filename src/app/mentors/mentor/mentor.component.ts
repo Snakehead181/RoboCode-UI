@@ -76,6 +76,6 @@ export class MentorComponent implements OnInit {
     console.log('Remove Mentor');
     this.mentorService.removeMentor(this.mentor._id);
 
-    this.router.navigateByUrl('/teams');
+    this.router.navigateByUrl('/mentors');
   }
 }

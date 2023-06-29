@@ -6,7 +6,7 @@ export interface User {
   password: string;
   firstName: string;
   lastName: string;
-  authLevel: string;
+  role: string;
   authdata?: string;
 }
 
@@ -25,6 +25,7 @@ export interface Mentor {
   username: string;
   password: string;
   assignedTeam: string;
+  role: string;
 }
 
 export interface Achievement {

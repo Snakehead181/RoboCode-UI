@@ -26,3 +26,11 @@ label {
 button:hover {
   background-color: #202020;
 }
+
+.column {
+  float: left;
+  width: 50%;
+}
+.centered {
+  text-align: center;
+}
