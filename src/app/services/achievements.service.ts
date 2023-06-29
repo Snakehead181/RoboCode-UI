@@ -53,4 +53,11 @@ export class AchievementsService {
       .delete('http://localhost:3000/achievements/' + achievementId)
       .subscribe(() => console.log('Achievement Deleted'));
   }
+
+  achievementCompleted(achievementId: string, teamId: string) {
+    return this.httpClient.post(
+      'http://localhost:3000/achievements' + achievementId,
+      teamId
+    );
+  }
 }
