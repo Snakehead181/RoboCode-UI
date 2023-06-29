@@ -8,6 +8,7 @@ import { MENTORS_ROUTES } from './mentors.routes';
 import { MentorService } from '../services';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditMentorComponent } from './edit-mentor/edit-mentor.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   exports: [],
-  declarations: [MentorsComponent, MentorComponent, RegisterMentorComponent],
+  declarations: [
+    MentorsComponent,
+    MentorComponent,
+    RegisterMentorComponent,
+    EditMentorComponent,
+  ],
   providers: [MentorService],
 })
 export class MentorsModule {}

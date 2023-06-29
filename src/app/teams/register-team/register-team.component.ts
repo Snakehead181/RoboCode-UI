@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MentorService, TeamService } from '../../services';
 import { ToastService } from '../../global/toast/toast.service';
-import { Subscription, catchError, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { Store } from '@ngrx/store';
 import { allTeams } from 'src/app/state/teams/teams.selector';
 import { Router } from '@angular/router';
+import { Mentor } from 'src/app/models';
 
 @Component({
   selector: 'register-team',
@@ -65,6 +66,8 @@ export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
   allTeams$ = this.store.select(allTeams);
 
+  mentorValues: Mentor;
+
   constructor(
     private fb: FormBuilder,
     private mentorService: MentorService,
@@ -75,6 +78,15 @@ export class RegisterTeamComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.updateTeams();
+    this.updateMentors();
+  }
+
+  updateTeams() {
+    this.teamService.getTeams();
+  }
+
+  updateMentors() {
     this.mentorService.getMentors();
   }
 
@@ -91,7 +103,6 @@ export class RegisterTeamComponent implements OnInit {
     this.teamForm.markAllAsTouched();
     if (this.teamForm.valid) {
       let formValues = this.teamForm.getRawValue();
-      console.log(formValues);
       let result$ = this.teamService.addTeam(formValues);
       result$
         .pipe(
@@ -114,8 +125,57 @@ export class RegisterTeamComponent implements OnInit {
             });
           }
         });
+      let assignedMentor = this.getMentor(formValues);
+      let mentorRes$ = this.mentorService.updateMentor(assignedMentor);
+      mentorRes$
+        .pipe(
+          catchError((err) => {
+            return of({
+              errorMessage: 'Assigning Team to Mentor Failed',
+              err,
+            });
+          })
+        )
+        .subscribe((result: any) => {
+          if (result.errorMessage) {
+            console.log(result.errorMessage);
+            this.toastService.danger({
+              text: 'Failed to Assign to Mentor',
+            });
+          } else {
+            this.toastService.success({
+              text: 'Assigned to Mentor',
+            });
+          }
+        });
       this.teamForm.reset();
       this.router.navigateByUrl('teams');
+      this.updateTeams();
     }
+  }
+
+  getMentor(formValues): Mentor {
+    this.freeMentors$.subscribe((mentors) => {
+      for (let mentor of mentors) {
+        if (mentor.name === formValues.assignedMentor) {
+          console.log(mentor);
+          return (this.mentorValues = {
+            _id: mentor._id,
+            name: mentor.name,
+            username: mentor.username,
+            password: mentor.password,
+            assignedTeam: formValues.name,
+          });
+        }
+      }
+      return (this.mentorValues = {
+        _id: '',
+        name: '',
+        assignedTeam: '',
+        username: '',
+        password: '',
+      });
+    });
+    return this.mentorValues;
   }
 }

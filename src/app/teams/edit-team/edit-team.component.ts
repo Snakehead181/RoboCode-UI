@@ -4,8 +4,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map, Subscription, catchError, of } from 'rxjs';
 import { ToastService } from 'src/app/global/toast/toast.service';
-import { Team } from 'src/app/models';
-import { TeamService } from 'src/app/services';
+import { Mentor, Team } from 'src/app/models';
+import { MentorService, TeamService } from 'src/app/services';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { teamById } from 'src/app/state/teams/teams.selector';
 
@@ -91,6 +91,7 @@ export class EditTeamComponent {
   team: Team;
   editTeamForm: FormGroup;
   teamSub: Subscription;
+  mentorValues: Mentor;
 
   constructor(
     private store: Store,
@@ -98,7 +99,8 @@ export class EditTeamComponent {
     private router: Router,
     private toastService: ToastService,
     private teamService: TeamService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private mentorService: MentorService
   ) {
     this.teamService.getTeamDetails(route.snapshot.params['id']);
 
@@ -154,8 +156,56 @@ export class EditTeamComponent {
             });
           }
         });
+      let assignedMentor = this.updateMentor(formValues);
+      let mentorRes$ = this.mentorService.updateMentor(assignedMentor);
+      mentorRes$
+        .pipe(
+          catchError((err) => {
+            return of({
+              errorMessage: 'Assigning Team to Mentor Failed',
+              err,
+            });
+          })
+        )
+        .subscribe((result: any) => {
+          if (result.errorMessage) {
+            console.log(result.errorMessage);
+            this.toastService.danger({
+              text: 'Failed to Assign to Mentor',
+            });
+          } else {
+            this.toastService.success({
+              text: 'Assigned to Mentor',
+            });
+          }
+        });
       this.editTeamForm.reset();
       this.router.navigateByUrl('teams/' + this.team._id);
     }
+  }
+
+  updateMentor(formValues): Mentor {
+    this.freeMentors$.subscribe((mentors) => {
+      for (let mentor of mentors) {
+        if (mentor.name === formValues.assignedMentor) {
+          console.log(mentor);
+          return (this.mentorValues = {
+            _id: mentor._id,
+            name: mentor.name,
+            username: mentor.username,
+            password: mentor.password,
+            assignedTeam: formValues.name,
+          });
+        }
+      }
+      return (this.mentorValues = {
+        _id: '',
+        name: '',
+        assignedTeam: '',
+        username: '',
+        password: '',
+      });
+    });
+    return this.mentorValues;
   }
 }

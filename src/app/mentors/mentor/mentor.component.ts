@@ -10,8 +10,14 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
   selector: 'mentor',
   template: `<div class="card mt-4">
     <ng-container *ngIf="mentor$ | async as mentor">
-      <div class="top-bar">
-        <h4 class="card-header">{{ mentor.name }}</h4>
+      <div class="card-header">
+        <h4>{{ mentor.name }}</h4>
+        <button type="button" class="btn btn-primary" [routerLink]="['edit']">
+          Change Mentor Details
+        </button>
+        <button type="button" class="btn btn-primary" (click)="removeMentor()">
+          Remove Mentor
+        </button>
       </div>
       <div class="card-body">
         <div class="row">
@@ -38,10 +44,13 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
   styleUrls: ['mentor.component.css'],
 })
 export class MentorComponent implements OnInit {
+  mentor: Mentor;
+
   constructor(
     private store: Store,
     private route: ActivatedRoute,
-    private mentorService: MentorService
+    private mentorService: MentorService,
+    private router: Router
   ) {
     this.mentorService.getMentorDetails(this.route.snapshot.params['id']);
   }
@@ -54,6 +63,7 @@ export class MentorComponent implements OnInit {
           if (p['id'] && !mentor) {
             return null;
           }
+          this.mentor = mentor!;
           return mentor ?? ({} as Mentor);
         })
       )
@@ -61,4 +71,11 @@ export class MentorComponent implements OnInit {
   );
 
   ngOnInit() {}
+
+  removeMentor() {
+    console.log('Remove Mentor');
+    this.mentorService.removeMentor(this.mentor._id);
+
+    this.router.navigateByUrl('/teams');
+  }
 }

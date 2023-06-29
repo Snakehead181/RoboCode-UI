@@ -84,10 +84,11 @@ export class TeamComponent {
   removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
-    this.teamService.removeTeam(this.team._id);
     let teamRemovedFromMentor = this.getMentor(this.team);
     console.log(teamRemovedFromMentor);
     this.mentorService.updateMentor(teamRemovedFromMentor);
+    this.teamService.removeTeam(this.team._id);
+
     this.router.navigateByUrl('/teams');
   }
 

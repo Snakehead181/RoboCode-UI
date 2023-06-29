@@ -39,9 +39,17 @@ export class MentorService {
   }
 
   updateMentor(mentor: Mentor) {
+    console.log(mentor);
     return this.httpClient.put(
-      'http://localhost:3000/mentors' + mentor._id,
+      'http://localhost:3000/mentors/' + mentor._id,
       mentor
     );
+  }
+
+  removeMentor(teamId: string) {
+    console.log(teamId);
+    return this.httpClient
+      .delete('http://localhost:3000/mentors/' + teamId)
+      .subscribe(() => console.log('Mentor Deleted'));
   }
 }

@@ -64,6 +64,9 @@ export class RegisterMentorComponent {
     this.mentorForm.markAllAsTouched();
     if (this.mentorForm.valid) {
       let formValues = this.mentorForm.getRawValue();
+      if (formValues.assignedTeam === '') {
+        formValues.assignedTeam = 'No Team Assigned';
+      }
       let result$ = this.mentorService.addMentor(formValues);
       result$
         .pipe(
