@@ -166,6 +166,7 @@ export class RegisterTeamComponent implements OnInit {
             password: mentor.password,
             assignedTeam: formValues.name,
             role: mentor.role,
+            achievements: mentor.achievements,
           });
         }
       }
@@ -176,6 +177,7 @@ export class RegisterTeamComponent implements OnInit {
         username: '',
         password: '',
         role: '',
+        achievements: [],
       });
     });
     return this.mentorValues;

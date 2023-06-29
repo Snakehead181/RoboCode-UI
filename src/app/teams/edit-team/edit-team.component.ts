@@ -196,6 +196,7 @@ export class EditTeamComponent {
             password: mentor.password,
             assignedTeam: formValues.name,
             role: mentor.role,
+            achievements: mentor.achievements,
           });
         }
       }
@@ -206,6 +207,7 @@ export class EditTeamComponent {
         username: '',
         password: '',
         role: '',
+        achievements: [],
       });
     });
     return this.mentorValues;

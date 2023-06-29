@@ -115,6 +115,7 @@ export class TeamComponent {
             password: mentor.password,
             assignedTeam: 'No Team Assigned',
             role: mentor.role,
+            achievements: mentor.achievements,
           });
         }
       }
@@ -125,6 +126,7 @@ export class TeamComponent {
         username: '',
         password: '',
         role: '',
+        achievements: [],
       });
     });
     return this.mentorValues;

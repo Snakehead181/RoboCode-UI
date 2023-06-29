@@ -33,7 +33,12 @@ import { ToastModule } from './global/toast/toast.module';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot(rootReducer),
+    StoreModule.forRoot(rootReducer, {
+      runtimeChecks: {
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+      },
+    }),
     CommonModule,
     TeamsModule,
     GlobalComponentModule,

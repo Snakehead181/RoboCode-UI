@@ -1,5 +1,3 @@
-import { AchievementType } from './types';
-
 export interface User {
   id: number;
   username: string;
@@ -26,6 +24,7 @@ export interface Mentor {
   password: string;
   assignedTeam: string;
   role: string;
+  achievements: Achievement[];
 }
 
 export interface Achievement {
@@ -35,4 +34,5 @@ export interface Achievement {
   points: number;
   requiresVerification: boolean;
   achievementType: string;
+  completed?: boolean;
 }
