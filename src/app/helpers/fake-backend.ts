@@ -19,6 +19,7 @@ const users: User[] = [
     password: 'Admin-2023',
     firstName: 'Admin',
     lastName: '2023',
+    authLevel: 'Admin',
   },
   {
     id: 2,
@@ -26,13 +27,15 @@ const users: User[] = [
     password: '213',
     firstName: 'Battle',
     lastName: 'Bots',
+    authLevel: 'Team',
   },
   {
     id: 3,
-    username: 'test',
-    password: 'test',
-    firstName: 'Test',
-    lastName: 'User',
+    username: 'mentor',
+    password: 'Mentor-2023',
+    firstName: 'Mentor',
+    lastName: '2023',
+    authLevel: 'Admin',
   },
 ];
 

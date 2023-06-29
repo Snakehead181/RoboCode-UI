@@ -50,23 +50,23 @@ import { teamById } from 'src/app/state/teams/teams.selector';
                   />
                 </li>
                 <li class="list-group-item">
-                  <div>Table Number:</div>
+                  <div>Username:</div>
                   <input
                     type="text"
-                    formControlName="tableNumber"
+                    formControlName="username"
                     class="form-control"
                   />
                 </li>
                 <li class="list-group-item">
-                  <div>Color:</div>
+                  <div>Password:</div>
                   <input
-                    type="text"
-                    formControlName="color"
+                    type="password"
+                    formControlName="password"
                     class="form-control"
                   />
                 </li>
                 <li class="list-group-item">
-                  <div>Assigned Mentor:</div>
+                  <div>Assigned Team:</div>
                   <div>{{ mentor.assignedTeam }}</div>
                 </li>
               </ul>
@@ -98,6 +98,7 @@ export class EditMentorComponent {
 
     this.teamSub = this.mentor$.subscribe((mentor) => {
       this.editMentorForm = fb.group({
+        _id: [mentor?._id],
         name: [mentor?.name],
         username: [mentor?.username],
         password: [mentor?.password],
@@ -149,7 +150,7 @@ export class EditMentorComponent {
         });
 
       this.editMentorForm.reset();
-      this.router.navigateByUrl('teams/' + this.mentor._id);
+      this.router.navigateByUrl('mentors/' + this.mentor._id);
     }
   }
 }
