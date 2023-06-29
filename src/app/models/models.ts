@@ -15,6 +15,7 @@ export interface Team {
   color: string;
   score: number;
   assignedMentor: string;
+  assignedMentorId: string;
 }
 
 export interface Mentor {
@@ -23,6 +24,7 @@ export interface Mentor {
   username: string;
   password: string;
   assignedTeam: string;
+  assignedTeamId: string;
   role: string;
   achievements: Achievement[];
 }

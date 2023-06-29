@@ -116,6 +116,7 @@ export class TeamComponent {
             assignedTeam: 'No Team Assigned',
             role: mentor.role,
             achievements: mentor.achievements,
+            assignedTeamId: mentor.assignedTeamId,
           });
         }
       }
@@ -127,6 +128,7 @@ export class TeamComponent {
         password: '',
         role: '',
         achievements: [],
+        assignedTeamId: '',
       });
     });
     return this.mentorValues;

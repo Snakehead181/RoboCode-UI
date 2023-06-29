@@ -197,6 +197,7 @@ export class EditTeamComponent {
             assignedTeam: formValues.name,
             role: mentor.role,
             achievements: mentor.achievements,
+            assignedTeamId: formValues._id,
           });
         }
       }
@@ -208,6 +209,7 @@ export class EditTeamComponent {
         password: '',
         role: '',
         achievements: [],
+        assignedTeamId: '',
       });
     });
     return this.mentorValues;
