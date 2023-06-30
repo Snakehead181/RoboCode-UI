@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { TankColors } from '../helpers/fake-backend';
 
 import { AuthenticationService } from '../services';
 
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
   teamRegistrationForm!: FormGroup;
   teamSubmitted = false;
   registerLoading = false;
-  tankColors = TankColors;
 
   constructor(
     private formBuilder: FormBuilder,

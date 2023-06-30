@@ -6,7 +6,7 @@ import {
   AchievementsLoaded,
   LoadAchievements,
 } from '../state/achievements/achievements.actions';
-import { Achievement } from '../models';
+import { Achievement, Team } from '../models';
 
 @Injectable()
 export class AchievementsService {
@@ -54,11 +54,9 @@ export class AchievementsService {
       .subscribe(() => console.log('Achievement Deleted'));
   }
 
-  achievementCompleted(achievementId: string, teamId: string) {
-    console.log(achievementId, teamId);
-    return this.httpClient.post(
-      'http://localhost:3000/achievements' + achievementId,
-      teamId
-    );
+  achievementCompleted(achievementId: string, team: Team) {
+    return this.httpClient
+      .post('http://localhost:3000/achievements/' + achievementId, team)
+      .subscribe(() => console.log('Achievement Marked as Completed'));
   }
 }

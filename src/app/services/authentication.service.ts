@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from 'src/enviroments/environment';
-import { User } from '../models';
+import { Mentor, User } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -64,5 +64,15 @@ export class AuthenticationService {
     let user = localStorage.getItem('user');
     let userObj = JSON.parse(user!);
     return userObj.id;
+  }
+
+  checkMentorAuth(
+    username: string,
+    password: string
+  ): Observable<Mentor | any> {
+    return this.http.post('http://localhost:3000/authentication', {
+      username,
+      password,
+    });
   }
 }

@@ -62,30 +62,13 @@ export class RegisterMentorComponent {
   ) {
     this.achievementService.getAchievements();
 
-    this.achievements$.subscribe((achievements) => {
-      this.achievementsArr = achievements;
-      achievements.forEach((achievement) =>
-        this.achievementsArr.push(achievement)
-      );
-    });
-
     this.mentorForm = this.fb.group({
       name: [''],
       username: [''],
       password: [''],
       assignedTeam: [''],
+      assignedTeamId: [''],
       role: ['MENTOR'],
-    });
-  }
-
-  addAchievement(a) {
-    console.log(a);
-    return this.fb.group({
-      name: a.name,
-      description: a.description,
-      points: a.points,
-      requiresVerification: a.requiresVerification,
-      achievementType: a.achievementType,
     });
   }
 
@@ -94,7 +77,6 @@ export class RegisterMentorComponent {
     this.mentorForm.markAllAsTouched();
     if (this.mentorForm.valid) {
       let formValues = this.mentorForm.getRawValue();
-      console.log('MENTOR FORM VALUES', formValues);
       if (formValues.assignedTeam === '') {
         formValues.assignedTeam = 'No Team Assigned';
       }

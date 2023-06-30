@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { switchMap, map } from 'rxjs';
+import { switchMap, map, Subscription } from 'rxjs';
 import { Mentor, Team } from 'src/app/models';
 import {
   AuthenticationService,
   MentorService,
   TeamService,
 } from 'src/app/services';
-import { allMentors } from 'src/app/state/mentors/mentors.selector';
+import { allMentors, mentorById } from 'src/app/state/mentors/mentors.selector';
 import { teamById } from 'src/app/state/teams/teams.selector';
 
 @Component({
@@ -44,7 +44,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
               </li>
               <li class="list-group-item">
                 <div>Assigned Mentor:</div>
-                <div>{{ team.assignedMentor }}</div>
+                <!-- <div>{{ getMentorNameById() }}</div> -->
               </li>
             </ul>
           </div>
@@ -59,7 +59,8 @@ import { teamById } from 'src/app/state/teams/teams.selector';
 })
 export class TeamComponent {
   allMentors$ = this.store.select(allMentors);
-  mentorValues: Mentor;
+  assignedMentor: Subscription;
+  mentorName: string;
   team: Team;
 
   constructor(
@@ -71,6 +72,7 @@ export class TeamComponent {
     private authService: AuthenticationService
   ) {
     this.teamService.getTeamDetails(this.route.snapshot.params['id']);
+    this.mentorService.getMentorDetails(this.team.assignedMentorId);
   }
 
   team$ = this.route.params.pipe(
@@ -95,42 +97,16 @@ export class TeamComponent {
   removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
-    let teamRemovedFromMentor = this.getMentor(this.team);
-    console.log(teamRemovedFromMentor);
-    this.mentorService.updateMentor(teamRemovedFromMentor);
     this.teamService.removeTeam(this.team._id);
 
     this.router.navigateByUrl('/teams');
   }
 
-  getMentor(formValues): Mentor {
-    this.allMentors$.subscribe((mentors) => {
-      for (let mentor of mentors) {
-        if (mentor.name === formValues.assignedMentor) {
-          console.log(mentor);
-          return (this.mentorValues = {
-            _id: mentor._id,
-            name: mentor.name,
-            username: mentor.username,
-            password: mentor.password,
-            assignedTeam: 'No Team Assigned',
-            role: mentor.role,
-            achievements: mentor.achievements,
-            assignedTeamId: mentor.assignedTeamId,
-          });
-        }
-      }
-      return (this.mentorValues = {
-        _id: '',
-        name: '',
-        assignedTeam: '',
-        username: '',
-        password: '',
-        role: '',
-        achievements: [],
-        assignedTeamId: '',
-      });
-    });
-    return this.mentorValues;
-  }
+  // getMentorNameById(): string {
+  //   mentor.subscribe((mentor) => {
+  //     this.mentorName = mentor?.name!;
+  //     return this.mentorName;
+  //   });
+  //   return this.mentorName;
+  // }
 }

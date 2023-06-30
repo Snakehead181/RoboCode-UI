@@ -14,7 +14,6 @@ export interface Team {
   tableNumber: string;
   color: string;
   score: number;
-  assignedMentor: string;
   assignedMentorId: string;
 }
 
@@ -23,10 +22,13 @@ export interface Mentor {
   name: string;
   username: string;
   password: string;
-  assignedTeam: string;
   assignedTeamId: string;
   role: string;
-  achievements: Achievement[];
+}
+
+export interface MentorTeamMap {
+  mentorId: string;
+  teamId: string;
 }
 
 export interface Achievement {
@@ -37,4 +39,10 @@ export interface Achievement {
   requiresVerification: boolean;
   achievementType: string;
   completed?: boolean;
+}
+
+export interface AchievementCompleted {
+  _id: string;
+  achievementId: string;
+  team: Team;
 }

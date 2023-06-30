@@ -110,7 +110,7 @@ export class EditTeamComponent {
         tableNumber: [team?.tableNumber],
         color: [team?.color],
         score: [team?.score],
-        assignedMentor: [team?.assignedMentor],
+        assignedMentorId: [team?.assignedMentorId],
       });
     });
   }
@@ -156,62 +156,8 @@ export class EditTeamComponent {
             });
           }
         });
-      let assignedMentor = this.updateMentor(formValues);
-      let mentorRes$ = this.mentorService.updateMentor(assignedMentor);
-      mentorRes$
-        .pipe(
-          catchError((err) => {
-            return of({
-              errorMessage: 'Assigning Team to Mentor Failed',
-              err,
-            });
-          })
-        )
-        .subscribe((result: any) => {
-          if (result.errorMessage) {
-            console.log(result.errorMessage);
-            this.toastService.danger({
-              text: 'Failed to Assign to Mentor',
-            });
-          } else {
-            this.toastService.success({
-              text: 'Assigned to Mentor',
-            });
-          }
-        });
       this.editTeamForm.reset();
       this.router.navigateByUrl('teams/' + this.team._id);
     }
-  }
-
-  updateMentor(formValues): Mentor {
-    this.freeMentors$.subscribe((mentors) => {
-      for (let mentor of mentors) {
-        if (mentor.name === formValues.assignedMentor) {
-          console.log(mentor);
-          return (this.mentorValues = {
-            _id: mentor._id,
-            name: mentor.name,
-            username: mentor.username,
-            password: mentor.password,
-            assignedTeam: formValues.name,
-            role: mentor.role,
-            achievements: mentor.achievements,
-            assignedTeamId: formValues._id,
-          });
-        }
-      }
-      return (this.mentorValues = {
-        _id: '',
-        name: '',
-        assignedTeam: '',
-        username: '',
-        password: '',
-        role: '',
-        achievements: [],
-        assignedTeamId: '',
-      });
-    });
-    return this.mentorValues;
   }
 }

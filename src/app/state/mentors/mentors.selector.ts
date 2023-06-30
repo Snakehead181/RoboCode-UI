@@ -18,7 +18,7 @@ export const mentorById = createSelector(
 
 export const freeMentors = createSelector(allMentors, (mentors: Mentor[]) => {
   return mentors.filter((m) => {
-    if (m.assignedTeam === 'No Team Assigned') {
+    if (m.assignedTeamId === '') {
       return true;
     }
     return false;

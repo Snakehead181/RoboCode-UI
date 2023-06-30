@@ -33,7 +33,7 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
               </li>
               <li class="list-group-item">
                 <div>Assigned Team:</div>
-                <div>{{ mentor.assignedTeam }}</div>
+                <div>{{ mentor.assignedTeamId }}</div>
               </li>
             </ul>
           </div>

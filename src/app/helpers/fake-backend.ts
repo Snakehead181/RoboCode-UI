@@ -8,38 +8,24 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import {
+  delay,
+  mergeMap,
+  materialize,
+  dematerialize,
+  switchMap,
+} from 'rxjs/operators';
 
 import { Mentor, User } from '../models';
-import { MentorService } from '../services';
+import { AuthenticationService, MentorService } from '../services';
 import { Store } from '@ngrx/store';
-
-const admins: User[] = [
-  {
-    id: 1,
-    username: 'admin',
-    password: 'Admin-2023',
-    firstName: 'Admin',
-    lastName: '2023',
-    role: 'ADMIN',
-  },
-  {
-    id: 2,
-    username: 'mentor',
-    password: 'Mentor-2023',
-    firstName: 'Mentor',
-    lastName: '2023',
-    role: 'MENTOR',
-  },
-];
-
-// const mentors: Mentor[] = ;
-
-export const TankColors = ['Blue', 'Red', 'Pink', 'Orange', 'Grey'];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-  constructor(private mentorService: MentorService, private store: Store) {}
+  constructor(
+    private authService: AuthenticationService,
+    private mentorService: MentorService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -47,14 +33,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const { url, method, headers, body } = request;
 
-    // wrap in delayed observable to simulate server api call
-    return of(null)
-      .pipe(mergeMap(handleRoute))
-      .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown
-      .pipe(delay(500))
-      .pipe(dematerialize());
-
-    function handleRoute() {
+    let handleRoute = () => {
       switch (true) {
         case url.endsWith('/users/authenticate') && method === 'POST':
           return authenticate();
@@ -64,28 +43,33 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           // pass through any requests not handled above
           return next.handle(request);
       }
-    }
+    };
 
     // route functions
 
-    function authenticate() {
+    let authenticate = () => {
       const { username, password } = body;
-      const user = admins.find(
-        (x) => x.username === username && x.password === password
-      );
-      if (!user) return error('Username or password is incorrect');
-      return ok({
-        id: user.id,
-        username: user.username,
-        name: user.firstName,
-        role: user.role,
-      });
-    }
 
-    function getUsers() {
+      return this.authService.checkMentorAuth(username, password).pipe(
+        switchMap((user: Mentor) => {
+          console.log(user);
+          if (!user) {
+            return error('Username or password is incorrect');
+          }
+          return ok({
+            id: user._id,
+            username: user.username,
+            name: user.name,
+            role: user.role,
+          });
+        })
+      );
+    };
+
+    let getUsers = () => {
       if (!isLoggedIn()) return unauthorized();
-      return ok(admins);
-    }
+      return ok(this.mentorService.getMentors());
+    };
 
     // helper functions
 
@@ -110,6 +94,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         `Basic ${window.btoa('admin:Admin-2023')}`
       );
     }
+
+    // wrap in delayed observable to simulate server api call
+    return of(null)
+      .pipe(mergeMap(handleRoute))
+      .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown
+      .pipe(delay(500))
+      .pipe(dematerialize());
   }
 }
 
