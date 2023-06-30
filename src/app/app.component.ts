@@ -37,7 +37,6 @@ import { AuthenticationService } from './services';
           class="nav-item nav-link"
           routerLink="/achievements"
           routerLinkActive="active"
-          *ngIf="role('ADMIN')"
           >Achievements</a
         >
         <button class="btn btn-link nav-item nav-link" (click)="logout()">

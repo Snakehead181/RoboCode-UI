@@ -14,7 +14,6 @@ const routes: Routes = [
   {
     path: 'leaderboard',
     component: LeaderboardComponent,
-    canActivate: [MentorGuard],
   },
   {
     path: 'mentors',
@@ -28,7 +27,7 @@ const routes: Routes = [
       import('./achievements/achievements.module').then(
         (m) => m.AcheivementsModule
       ),
-    canActivate: [AdminGuard],
+    canActivate: [MentorGuard],
   },
   {
     path: 'teams',

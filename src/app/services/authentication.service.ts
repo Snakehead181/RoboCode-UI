@@ -59,4 +59,10 @@ export class AuthenticationService {
     }
     return false;
   }
+
+  getCurrentUserId() {
+    let user = localStorage.getItem('user');
+    let userObj = JSON.parse(user!);
+    return userObj.id;
+  }
 }

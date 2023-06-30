@@ -2,14 +2,19 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { allAchievements } from '../state/achievements/achivements.selector';
-import { AchievementsService } from '../services';
+import { AchievementsService, AuthenticationService } from '../services';
 
 @Component({
   selector: 'achievements',
   template: `<div class="card">
     <div class="card-header">
       <h4>Achievements</h4>
-      <button type="button" class="btn btn-primary" [routerLink]="['create']">
+      <button
+        type="button"
+        class="btn btn-primary"
+        [routerLink]="['create']"
+        *ngIf="checkRole('ADMIN')"
+      >
         Create Achievement
       </button>
     </div>
@@ -37,6 +42,7 @@ export class AchievementsComponent {
 
   constructor(
     private achievementsService: AchievementsService,
+    private authService: AuthenticationService,
     private store: Store
   ) {}
 
@@ -46,5 +52,9 @@ export class AchievementsComponent {
 
   getAchievements() {
     this.achievementsService.getAchievements();
+  }
+
+  checkRole(role) {
+    this.authService.checkRole(role);
   }
 }

@@ -55,6 +55,7 @@ export class AchievementsService {
   }
 
   achievementCompleted(achievementId: string, teamId: string) {
+    console.log(achievementId, teamId);
     return this.httpClient.post(
       'http://localhost:3000/achievements' + achievementId,
       teamId

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Achievement } from 'src/app/models';
+import { AchievementsService, AuthenticationService } from 'src/app/services';
 
 @Component({
   selector: 'achievement-card',
@@ -12,11 +13,7 @@ import { Achievement } from 'src/app/models';
           title="Requires Verification"
         ></i>
         <h5 class="card-title">{{ achievement.name }}</h5>
-        <i
-          class="bi bi-gear"
-          title="Requires Verification"
-          [routerLink]="achievement._id"
-        ></i>
+        <i class="bi bi-gear" [routerLink]="achievement._id"></i>
       </div>
       <p class="card-text centered desc">
         {{ achievement.description }}
@@ -24,9 +21,16 @@ import { Achievement } from 'src/app/models';
       <p class="card-text centered" style="font-size: 15px">
         {{ achievement.points }} Points
       </p>
-      <p class="card-text centered" style="font-style: italic; font-size: 12px">
-        {{ achievement.achievementType }}
-      </p>
+      <div class="bottom-part centered">
+        <i class="bi bi-x-circle" (click)="achievementNotCompleted()"></i>
+        <p
+          class="card-text centered"
+          style="font-style: italic; font-size: 12px"
+        >
+          {{ achievement.achievementType }}
+        </p>
+        <i class="bi bi-check-circle" (click)="achievementCompleted()"></i>
+      </div>
     </div>
   </div>`,
   styleUrls: ['achievement-card.component.css'],
@@ -35,7 +39,21 @@ export class AchievementCardComponent implements OnInit {
   @Input()
   achievement: Achievement;
 
-  constructor() {}
+  constructor(
+    private achievementsService: AchievementsService,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit() {}
+
+  achievementNotCompleted() {
+    console.log(this.achievement.name);
+  }
+
+  achievementCompleted() {
+    this.achievementsService.achievementCompleted(
+      this.achievement._id,
+      this.authService.getCurrentUserId()
+    );
+  }
 }

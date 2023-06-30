@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
-import { Achievement, Team } from 'src/app/models';
-import { AchievementsService, TeamService } from 'src/app/services';
+import { Achievement } from 'src/app/models';
+import { AchievementsService, AuthenticationService } from 'src/app/services';
 import { achievementById } from 'src/app/state/achievements/achivements.selector';
-import { teamById } from 'src/app/state/teams/teams.selector';
 
 @Component({
   selector: 'achievement',
@@ -13,16 +12,18 @@ import { teamById } from 'src/app/state/teams/teams.selector';
     <ng-container *ngIf="achievement$ | async as achievement">
       <div class="card-header">
         <h4>{{ achievement.name }}</h4>
-        <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-          Edit Achievement
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="removeAchievement()"
-        >
-          Remove Achievement
-        </button>
+        <ng-container class="admin-buttons" *ngIf="checkRole('ADMIN')">
+          <button type="button" class="btn btn-primary" [routerLink]="['edit']">
+            Edit Achievement
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="removeAchievement()"
+          >
+            Remove Achievement
+          </button>
+        </ng-container>
       </div>
       <div class="card-body">
         <div class="row">
@@ -68,7 +69,8 @@ export class AchievementComponent {
     private store: Store,
     private route: ActivatedRoute,
     private router: Router,
-    private achievementsService: AchievementsService
+    private achievementsService: AchievementsService,
+    private authService: AuthenticationService
   ) {
     this.achievementsService.getAchievementDetails(
       this.route.snapshot.params['id']
@@ -89,6 +91,10 @@ export class AchievementComponent {
       )
     )
   );
+
+  checkRole(role) {
+    this.authService.checkRole(role);
+  }
 
   ngOnInit() {
     this.getAchievements();
