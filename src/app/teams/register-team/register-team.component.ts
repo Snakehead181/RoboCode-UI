@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MentorService, TeamService } from '../../services';
+import {
+  AchievementsService,
+  MentorService,
+  TeamService,
+} from '../../services';
 import { ToastService } from '../../global/toast/toast.service';
 import { catchError, empty, of } from 'rxjs';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { Store } from '@ngrx/store';
 import { allTeams } from 'src/app/state/teams/teams.selector';
 import { Router } from '@angular/router';
-import { Mentor } from 'src/app/models';
+import { Achievement, AssignedMentor, Mentor } from 'src/app/models';
+import { MentorTeamService } from 'src/app/services/mentor-team.service';
+import { allAchievements } from 'src/app/state/achievements/achivements.selector';
 
 @Component({
   selector: 'register-team',
@@ -44,12 +50,12 @@ import { Mentor } from 'src/app/models';
             <select
               id="assignedMentor"
               class="form-select"
-              formControlName="assignedMentorId"
+              formControlName="assignedMentor"
             >
               <option value="null">Select Mentor</option>
               <option
                 *ngFor="let freeMentor of freeMentors$ | async"
-                [ngValue]="freeMentor._id"
+                [ngValue]="{ _id: freeMentor._id, name: freeMentor.name }"
               >
                 {{ freeMentor.name }}
               </option>
@@ -65,6 +71,8 @@ import { Mentor } from 'src/app/models';
 export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
   allTeams$ = this.store.select(allTeams);
+  achievements$ = this.store.select(allAchievements);
+  achievementsArr: Achievement[] = [];
 
   mentorValues: Mentor;
 
@@ -74,8 +82,12 @@ export class RegisterTeamComponent implements OnInit {
     private teamService: TeamService,
     private toastService: ToastService,
     private store: Store,
-    private router: Router
-  ) {}
+    private router: Router,
+    private mentorTeamService: MentorTeamService,
+    private achievementService: AchievementsService
+  ) {
+    this.getAchievements();
+  }
 
   ngOnInit(): void {
     this.updateTeams();
@@ -90,13 +102,23 @@ export class RegisterTeamComponent implements OnInit {
     this.mentorService.getMentors();
   }
 
+  getAchievements() {
+    this.achievementService.getAchievements();
+    this.achievements$.subscribe((achievements) => {
+      achievements.map((achievement) => {
+        this.achievementsArr.push(achievement);
+      });
+    });
+  }
+
   teamForm = this.fb.group({
-    _id: [''],
+    _id: [],
     name: ['', Validators.required],
     tableNumber: [''],
     score: [0],
     color: [''],
-    assignedMentorId: [''],
+    assignedMentor: [{ _id: '', name: '' }],
+    achievements: [this.achievementsArr],
   });
 
   submit() {
@@ -104,32 +126,33 @@ export class RegisterTeamComponent implements OnInit {
     this.teamForm.markAllAsTouched();
     if (this.teamForm.valid) {
       let formValues = this.teamForm.getRawValue();
-      console.log(formValues);
       let result$ = this.teamService.addTeam(formValues);
-      result$
-        .pipe(
-          catchError((err) => {
-            return of({
-              errorMessage: 'Adding a team failed',
-              err,
-            });
-          })
-        )
-        .subscribe((result: any) => {
-          if (result.errorMessage) {
-            console.log(result.errorMessage);
-            this.toastService.danger({
-              text: 'Failed to add team',
-            });
-          } else {
-            this.toastService.success({
-              text: 'Team Added',
-            });
-          }
-        });
-      this.updateTeams();
+      result$.subscribe((result: any) => {
+        console.log('FORM RESULTTTT', result);
+        if (result === null) {
+          console.log(result.errorMessage);
+          this.toastService.danger({
+            text: 'Failed to add team',
+          });
+        } else {
+          this.toastService.success({
+            text: 'Team Added',
+          });
+          let assignedTeam = {
+            _id: result._id!,
+            name: formValues.name!,
+          };
+          console.log(assignedTeam);
+          this.mentorTeamService.updateMentorsAssignedTeam(
+            formValues.assignedMentor!._id,
+            assignedTeam
+          );
+        }
+      });
+
       this.teamForm.reset();
-      this.router.navigateByUrl('teams');
+      // window.location.reload();
+      this.updateTeams();
     }
   }
 }

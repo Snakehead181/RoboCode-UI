@@ -114,11 +114,9 @@ export class CreateAchievementsComponent implements OnInit {
   });
 
   submit() {
-    console.log('submit');
     this.achievementForm.markAllAsTouched();
     if (this.achievementForm.valid) {
       let formValues = this.achievementForm.getRawValue();
-      console.log(formValues);
       let result$ = this.achievementsService.addAchievement(formValues);
       result$
         .pipe(
@@ -131,7 +129,6 @@ export class CreateAchievementsComponent implements OnInit {
         )
         .subscribe((result: any) => {
           if (result.errorMessage) {
-            console.log(result.errorMessage);
             this.toastService.danger({
               text: 'Failed to Create Achievement',
             });

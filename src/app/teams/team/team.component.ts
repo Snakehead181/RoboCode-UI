@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map, Subscription } from 'rxjs';
-import { Mentor, Team } from 'src/app/models';
+import { Team } from 'src/app/models';
 import {
   AuthenticationService,
   MentorService,
   TeamService,
 } from 'src/app/services';
-import { allMentors, mentorById } from 'src/app/state/mentors/mentors.selector';
 import { teamById } from 'src/app/state/teams/teams.selector';
 
 @Component({
@@ -44,7 +43,9 @@ import { teamById } from 'src/app/state/teams/teams.selector';
               </li>
               <li class="list-group-item">
                 <div>Assigned Mentor:</div>
-                <!-- <div>{{ getMentorNameById() }}</div> -->
+                <div>
+                  {{ team.assignedMentor.name }}
+                </div>
               </li>
             </ul>
           </div>
@@ -58,9 +59,10 @@ import { teamById } from 'src/app/state/teams/teams.selector';
   styleUrls: ['team.component.css'],
 })
 export class TeamComponent {
-  allMentors$ = this.store.select(allMentors);
-  assignedMentor: Subscription;
-  mentorName: string;
+  mentorState$ = this.store.select((s: any) => s.mentor);
+  assignedMentorName$: Subscription;
+  loading$ = this.mentorState$.pipe(map((x: any) => x.loading));
+
   team: Team;
 
   constructor(
@@ -72,7 +74,7 @@ export class TeamComponent {
     private authService: AuthenticationService
   ) {
     this.teamService.getTeamDetails(this.route.snapshot.params['id']);
-    this.mentorService.getMentorDetails(this.team.assignedMentorId);
+    this.mentorService.getMentors();
   }
 
   team$ = this.route.params.pipe(
@@ -94,19 +96,12 @@ export class TeamComponent {
     return this.authService.getRole() || '';
   }
 
-  removeTeam() {
+  async removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
     this.teamService.removeTeam(this.team._id);
 
-    this.router.navigateByUrl('/teams');
+    await this.router.navigateByUrl('/teams');
+    window.location.reload();
   }
-
-  // getMentorNameById(): string {
-  //   mentor.subscribe((mentor) => {
-  //     this.mentorName = mentor?.name!;
-  //     return this.mentorName;
-  //   });
-  //   return this.mentorName;
-  // }
 }

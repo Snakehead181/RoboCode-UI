@@ -13,7 +13,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { StoreModule } from '@ngrx/store';
-import { MentorService } from './services';
+import { MentorService, TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
 import { MentorsComponent } from './mentors/mentors.component';
@@ -26,6 +26,7 @@ import { GlobalComponentModule } from './global/components/global-components.mod
 import { MentorsModule } from './mentors/mentors.module';
 import { AcheivementsModule } from './achievements/achievements.module';
 import { ToastModule } from './global/toast/toast.module';
+import { MentorTeamService } from './services/mentor-team.service';
 
 @NgModule({
   imports: [
@@ -58,6 +59,8 @@ import { ToastModule } from './global/toast/toast.module';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     UserService,
     MentorService,
+    TeamService,
+    MentorTeamService,
     // provider used to create fake backend
     fakeBackendProvider,
   ],

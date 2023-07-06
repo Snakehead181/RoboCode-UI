@@ -18,9 +18,24 @@ export const mentorById = createSelector(
 
 export const freeMentors = createSelector(allMentors, (mentors: Mentor[]) => {
   return mentors.filter((m) => {
-    if (m.assignedTeamId === '') {
+    console.log(m);
+    if (m.assignedTeam._id === '') {
       return true;
     }
     return false;
   });
 });
+
+export const mentorNameById = createSelector(
+  allMentors,
+  (mentors: Mentor[], assignedMentorId: string) => {
+    for (let mentor of mentors) {
+      console.log(mentor);
+      if (mentor._id === assignedMentorId) {
+        return mentor.name;
+      }
+      return `Mentor with ID: ${mentor._id} not found`;
+    }
+    return '';
+  }
+);

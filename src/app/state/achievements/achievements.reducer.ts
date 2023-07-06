@@ -19,7 +19,6 @@ export const initialAchievementState: AchievementState = {
 export const achievementReducer = createReducer(
   initialAchievementState,
   on(LoadAchievements, (oldState: AchievementState) => {
-    console.log('LoadAchievements');
     return {
       ...oldState,
       loading: true,
@@ -27,7 +26,6 @@ export const achievementReducer = createReducer(
     };
   }),
   on(AchievementsLoaded, (oldState: AchievementState, { data }) => {
-    console.log('AchievementsLoaded');
     return {
       ...oldState,
       loading: false,
@@ -35,7 +33,6 @@ export const achievementReducer = createReducer(
     };
   }),
   on(AchievementLoaded, (oldState: AchievementState, { data }) => {
-    console.log('AchievementLoaded');
     return {
       ...oldState,
       achievements: [

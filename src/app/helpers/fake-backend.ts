@@ -51,7 +51,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
       return this.authService.checkMentorAuth(username, password).pipe(
         switchMap((user: Mentor) => {
-          console.log(user);
           if (!user) {
             return error('Username or password is incorrect');
           }

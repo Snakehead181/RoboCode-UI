@@ -30,7 +30,6 @@ export class LeaderboardComponent implements OnInit {
     private teamService: TeamService,
     private store: Store
   ) {
-    console.log('loading');
     this.updateTeams();
   }
 

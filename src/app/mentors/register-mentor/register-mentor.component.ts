@@ -56,7 +56,6 @@ export class RegisterMentorComponent {
     private fb: FormBuilder,
     private mentorService: MentorService,
     private toastService: ToastService,
-    private router: Router,
     private store: Store,
     private achievementService: AchievementsService
   ) {
@@ -66,20 +65,20 @@ export class RegisterMentorComponent {
       name: [''],
       username: [''],
       password: [''],
-      assignedTeam: [''],
-      assignedTeamId: [''],
+      assignedTeam: [
+        {
+          _id: '',
+          name: '',
+        },
+      ],
       role: ['MENTOR'],
     });
   }
 
   submit() {
-    console.log('submit');
     this.mentorForm.markAllAsTouched();
     if (this.mentorForm.valid) {
       let formValues = this.mentorForm.getRawValue();
-      if (formValues.assignedTeam === '') {
-        formValues.assignedTeam = 'No Team Assigned';
-      }
       let result$ = this.mentorService.addMentor(formValues);
       result$
         .pipe(
@@ -92,7 +91,6 @@ export class RegisterMentorComponent {
         )
         .subscribe((result: any) => {
           if (result.errorMessage) {
-            console.log(result.errorMessage);
             this.toastService.danger({
               text: 'Failed to add mentor',
             });

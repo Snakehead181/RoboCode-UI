@@ -67,7 +67,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
                 </li>
                 <li class="list-group-item">
                   <div>Assigned Team:</div>
-                  <div>{{ mentor.assignedTeamId }}</div>
+                  <div>{{ mentor.assignedTeam.name }}</div>
                 </li>
               </ul>
             </form>
@@ -102,7 +102,7 @@ export class EditMentorComponent {
         name: [mentor?.name],
         username: [mentor?.username],
         password: [mentor?.password],
-        assignedTeamId: [mentor?.assignedTeamId],
+        assignedTeam: [mentor?.assignedTeam],
       });
     });
   }
@@ -138,7 +138,6 @@ export class EditMentorComponent {
         )
         .subscribe((result: any) => {
           if (result.errorMessage) {
-            console.log(result.errorMessage);
             this.toastService.danger({
               text: 'Failed to update mentor',
             });

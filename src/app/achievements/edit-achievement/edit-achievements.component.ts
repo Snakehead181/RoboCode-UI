@@ -170,7 +170,6 @@ export class EditAchievementComponent {
         )
         .subscribe((result: any) => {
           if (result.errorMessage) {
-            console.log(result.errorMessage);
             this.toastService.danger({
               text: 'Failed to add team',
             });

@@ -15,7 +15,6 @@ export const initialMentorState: MentorState = {
 export const mentorReducer = createReducer(
   initialMentorState,
   on(LoadMentors, (oldState: MentorState) => {
-    console.log('LoadMentors');
     return {
       ...oldState,
       loading: true,
@@ -23,8 +22,6 @@ export const mentorReducer = createReducer(
     };
   }),
   on(MentorsLoaded, (oldState: MentorState, { data }) => {
-    console.log('MentorsLoaded');
-    console.log('Data');
     return {
       ...oldState,
       loading: false,

@@ -71,7 +71,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
                     <option value="null">Change Mentor</option>
                     <option
                       *ngFor="let freeMentor of freeMentors$ | async"
-                      [ngValue]="freeMentor.name"
+                      [ngValue]="freeMentor"
                     >
                       {{ freeMentor.name }}
                     </option>
@@ -110,7 +110,7 @@ export class EditTeamComponent {
         tableNumber: [team?.tableNumber],
         color: [team?.color],
         score: [team?.score],
-        assignedMentorId: [team?.assignedMentorId],
+        assignedMentor: [team?.assignedMentor],
       });
     });
   }

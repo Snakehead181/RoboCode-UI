@@ -13,8 +13,6 @@ export class AchievementsService {
   constructor(private httpClient: HttpClient, private store: Store) {}
 
   getAchievements() {
-    console.log('Get Achievements');
-
     this.store.dispatch(LoadAchievements());
     this.httpClient
       .get('http://localhost:3000/achievements')
@@ -25,7 +23,6 @@ export class AchievementsService {
   }
 
   addAchievement(achievement) {
-    console.log('Add Achievement');
     return this.httpClient.post(
       'http://localhost:3000/achievements',
       achievement
@@ -36,7 +33,6 @@ export class AchievementsService {
     this.httpClient
       .get('http://localhost:3000/achievements/' + achievementId)
       .subscribe((a) => {
-        console.log('getAchievement', { a });
         this.store.dispatch(AchievementLoaded({ data: a as Achievement }));
       });
   }

@@ -33,7 +33,7 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
               </li>
               <li class="list-group-item">
                 <div>Assigned Team:</div>
-                <div>{{ mentor.assignedTeamId }}</div>
+                <div>{{ mentor.assignedTeam.name }}</div>
               </li>
             </ul>
           </div>
@@ -73,7 +73,6 @@ export class MentorComponent implements OnInit {
   ngOnInit() {}
 
   removeMentor() {
-    console.log('Remove Mentor');
     this.mentorService.removeMentor(this.mentor._id);
 
     this.router.navigateByUrl('/mentors');
