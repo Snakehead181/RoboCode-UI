@@ -16,9 +16,8 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { Mentor, User } from '../models';
+import { Mentor } from '../models';
 import { AuthenticationService, MentorService } from '../services';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {

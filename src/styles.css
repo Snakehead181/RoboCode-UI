@@ -76,3 +76,7 @@ label {
 button:hover {
   background-color: #202020;
 }
+
+a {
+  color: lightgrey;
+}
