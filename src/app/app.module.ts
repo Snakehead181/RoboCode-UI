@@ -16,17 +16,14 @@ import { StoreModule } from '@ngrx/store';
 import { MentorService, TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
-import { MentorsComponent } from './mentors/mentors.component';
 import { rootReducer } from './state/root.reducer';
-import { RegisterMentorComponent } from './mentors/register-mentor/register-mentor.component';
-import { MentorComponent } from './mentors/mentor/mentor.component';
-import { EditTeamComponent } from './teams/edit-team/edit-team.component';
 import { TeamsModule } from './teams/teams.module';
 import { GlobalComponentModule } from './global/components/global-components.module';
 import { MentorsModule } from './mentors/mentors.module';
-import { AcheivementsModule } from './achievements/achievements.module';
+import { AchievementsModule } from './achievements/achievements.module';
 import { ToastModule } from './global/toast/toast.module';
 import { MentorTeamService } from './services/mentor-team.service';
+import { TeamAchievementsModule } from './achievements/team-achievements/team-achievements.module';
 
 @NgModule({
   imports: [
@@ -44,7 +41,8 @@ import { MentorTeamService } from './services/mentor-team.service';
     TeamsModule,
     GlobalComponentModule,
     MentorsModule,
-    AcheivementsModule,
+    AchievementsModule,
+    TeamAchievementsModule,
     ToastModule,
   ],
 

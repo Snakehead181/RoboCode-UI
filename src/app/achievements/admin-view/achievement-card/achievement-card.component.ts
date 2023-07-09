@@ -13,7 +13,7 @@ import { AchievementsService, AuthenticationService } from 'src/app/services';
           title="Requires Verification"
         ></i>
         <h5 class="card-title">{{ achievement.name }}</h5>
-        <i class="bi bi-gear" [routerLink]="achievement._id"></i>
+        <i class="bi bi-gear" [routerLink]="achievement._id + '/view'"></i>
       </div>
       <p class="card-text centered desc">
         {{ achievement.description }}
@@ -22,14 +22,12 @@ import { AchievementsService, AuthenticationService } from 'src/app/services';
         {{ achievement.points }} Points
       </p>
       <div class="bottom-part centered">
-        <i class="bi bi-x-circle" (click)="achievementNotCompleted()"></i>
         <p
           class="card-text centered"
           style="font-style: italic; font-size: 12px"
         >
           {{ achievement.achievementType }}
         </p>
-        <i class="bi bi-check-circle" (click)="achievementCompleted()"></i>
       </div>
     </div>
   </div>`,

@@ -180,7 +180,9 @@ export class EditAchievementComponent {
           }
         });
       this.achievementForm.reset();
-      this.router.navigateByUrl('achievements/' + this.achievement._id);
+      this.router.navigateByUrl(
+        'achievements/' + this.achievement._id + '/view'
+      );
     }
   }
 }

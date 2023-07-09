@@ -12,8 +12,12 @@ import { achievementById } from 'src/app/state/achievements/achivements.selector
     <ng-container *ngIf="achievement$ | async as achievement">
       <div class="card-header">
         <h4>{{ achievement.name }}</h4>
-        <ng-container class="admin-buttons" *ngIf="checkRole('ADMIN')">
-          <button type="button" class="btn btn-primary" [routerLink]="['edit']">
+        <ng-container class="admin-buttons">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [routerLink]="['../edit']"
+          >
             Edit Achievement
           </button>
           <button

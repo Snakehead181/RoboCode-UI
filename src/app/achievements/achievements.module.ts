@@ -1,30 +1,23 @@
 import { NgModule } from '@angular/core';
 
-import { AchievementsComponent } from './acheivements.component';
-import { AchievementCardComponent } from './achievement-card/achievement-card.component';
 import { ACHIEVEMENTS_ROUTES } from './achievements.routes';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AchievementsService } from '../services';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CreateAchievementsComponent } from './create-achievements/create-achievements.component';
-import { EditAchievementComponent } from './edit-achievement/edit-achievements.component';
-import { AchievementComponent } from './achievement/achievement.component';
+import { TeamAchievementsModule } from './team-achievements/team-achievements.module';
+import { AdminAchievementsModule } from './admin-view/admin-achievements.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(ACHIEVEMENTS_ROUTES),
+    TeamAchievementsModule,
+    AdminAchievementsModule,
   ],
   exports: [],
-  declarations: [
-    AchievementsComponent,
-    AchievementComponent,
-    AchievementCardComponent,
-    CreateAchievementsComponent,
-    EditAchievementComponent,
-  ],
+  declarations: [],
   providers: [AchievementsService],
 })
-export class AcheivementsModule {}
+export class AchievementsModule {}

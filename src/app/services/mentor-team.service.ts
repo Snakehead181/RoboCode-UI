@@ -8,10 +8,11 @@ export class MentorTeamService {
 
   updateMentorsAssignedTeam(id: string, assignedTeam: AssignedTeam) {
     console.log(`Updating mentor with ID: ${id} with`, assignedTeam);
-    return this.httpClient.put(
-      'http://localhost:3000/assignedTeams/' + id,
-      assignedTeam
-    );
+    return this.httpClient
+      .put('http://localhost:3000/assignedTeams/' + id, assignedTeam)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   updateTeamsAssignedMentors(id: string, assignedMentor: AssignedMentor) {

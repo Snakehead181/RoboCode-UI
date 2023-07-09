@@ -59,6 +59,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             username: user.username,
             name: user.name,
             role: user.role,
+            assignedTeam: user.assignedTeam,
           });
         })
       );

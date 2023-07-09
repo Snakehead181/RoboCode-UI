@@ -66,6 +66,12 @@ export class AuthenticationService {
     return userObj.id;
   }
 
+  getCurrentUserObject() {
+    let user = localStorage.getItem('user');
+    let userObj = JSON.parse(user!);
+    return userObj;
+  }
+
   checkMentorAuth(
     username: string,
     password: string

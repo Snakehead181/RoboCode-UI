@@ -25,7 +25,7 @@ const routes: Routes = [
     path: 'achievements',
     loadChildren: () =>
       import('./achievements/achievements.module').then(
-        (m) => m.AcheivementsModule
+        (m) => m.AchievementsModule
       ),
     canActivate: [MentorGuard],
   },

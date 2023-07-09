@@ -15,5 +15,5 @@ export const allAchievements = createSelector(
 export const achievementById = createSelector(
   allAchievements,
   (achievements: Achievement[], id: string) =>
-    achievements.find((achievement) => achievement._id === id)
+    achievements.find((achievement) => achievement?._id === id)
 );

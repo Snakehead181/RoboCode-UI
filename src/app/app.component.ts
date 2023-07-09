@@ -35,8 +35,16 @@ import { AuthenticationService } from './services';
         >
         <a
           class="nav-item nav-link"
+          [routerLink]="'/achievements/' + getTeamId()"
+          routerLinkActive="active"
+          *ngIf="role('MENTOR')"
+          >Team Achievements</a
+        >
+        <a
+          class="nav-item nav-link"
           routerLink="/achievements"
           routerLinkActive="active"
+          *ngIf="role('ADMIN')"
           >Achievements</a
         >
         <button class="btn btn-link nav-item nav-link" (click)="logout()">
@@ -71,5 +79,9 @@ export class AppComponent {
 
   role(role: string) {
     return this.authenticationService.checkRole(role);
+  }
+
+  getTeamId() {
+    return this.authenticationService.getCurrentUserObject().assignedTeam._id;
   }
 }

@@ -52,7 +52,7 @@ export class AchievementsService {
 
   achievementCompleted(achievementId: string, team: Team) {
     return this.httpClient
-      .post('http://localhost:3000/achievements/' + achievementId, team)
+      .put('http://localhost:3000/teamAchievements/' + achievementId, team)
       .subscribe(() => console.log('Achievement Marked as Completed'));
   }
 }

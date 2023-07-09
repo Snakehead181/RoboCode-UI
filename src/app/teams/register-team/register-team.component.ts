@@ -148,11 +148,11 @@ export class RegisterTeamComponent implements OnInit {
             assignedTeam
           );
         }
-      });
 
-      this.teamForm.reset();
-      // window.location.reload();
-      this.updateTeams();
+        this.teamForm.reset();
+        // window.location.reload();
+        this.updateTeams();
+      });
     }
   }
 }

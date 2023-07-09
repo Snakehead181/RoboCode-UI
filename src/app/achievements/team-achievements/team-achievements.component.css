@@ -1,0 +1,81 @@
+button {
+  background-color: black;
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+button:hover {
+  background-color: #202020;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bi-plus-circle {
+  justify-content: center;
+  font-size: 30px;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+}
+
+.bi-plus-circle:hover {
+  cursor: pointer;
+}
+
+.top-part {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+h1 {
+  text-align: center;
+}
+
+.list-group-item,
+input,
+select {
+  background-color: black;
+  border-color: #00ff41;
+  color: #00ff41;
+}
+
+#achievement-form {
+  margin: 20px;
+}
+
+input:focus {
+  background-color: black;
+  cursor: #00ff41;
+  color: #00ff41;
+}
+
+.column {
+  justify-content: space-between;
+  width: 50%;
+}
+
+.list-group-item {
+  justify-content: space-between;
+  display: inline-flex;
+}
+
+.list-group-item div {
+  margin: auto 0px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 50%;
+}
+
+.form-check-input {
+  flex-shrink: 0;
+}
+
+.col-6 {
+  margin: auto;
+}

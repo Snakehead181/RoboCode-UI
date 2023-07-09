@@ -1,0 +1,46 @@
+.top-part,
+.bottom-part {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+h1 {
+  text-align: center;
+}
+.bi-exclamation-circle,
+.bi-x-circle {
+  position: absolute;
+  left: 0;
+}
+.bi-gear,
+.bi-check-circle {
+  position: absolute;
+  right: 0;
+}
+.centered {
+  text-align: center;
+}
+.card {
+  margin: 10px;
+  border-color: white;
+  color: white;
+}
+.bi-gear:hover,
+.bi-check-circle:hover,
+.bi-x-circle:hover {
+  cursor: pointer;
+}
+.card-title {
+  margin: 0px 30px;
+}
+.desc {
+  margin: 20px 35px;
+}
+.bi-x-circle {
+  color: red;
+  font-size: 30px;
+}
+.bi-check-circle {
+  color: green;
+  font-size: 30px;
+}

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import { allAchievements } from '../state/achievements/achivements.selector';
-import { AchievementsService, AuthenticationService } from '../services';
+import { allAchievements } from '../../state/achievements/achivements.selector';
+import { AchievementsService, AuthenticationService } from '../../services';
 
 @Component({
   selector: 'achievements',
