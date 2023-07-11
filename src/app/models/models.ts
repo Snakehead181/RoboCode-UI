@@ -30,6 +30,7 @@ export interface Mentor {
   password?: string;
   role?: string;
   assignedTeam: AssignedTeam;
+  isHidden: boolean;
 }
 
 export interface AssignedMentor {

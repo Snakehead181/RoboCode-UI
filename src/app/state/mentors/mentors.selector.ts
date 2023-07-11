@@ -7,7 +7,7 @@ export const selectMentorState = (state) => state.mentor;
 export const allMentors = createSelector(
   selectMentorState,
   (state: MentorState) => {
-    return state.mentors;
+    return state.mentors.filter((mentor) => !mentor.isHidden);
   }
 );
 
