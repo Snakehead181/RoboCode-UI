@@ -13,7 +13,10 @@ import { AchievementsService, AuthenticationService } from 'src/app/services';
           title="Requires Verification"
         ></i>
         <h5 class="card-title">{{ achievement.name }}</h5>
-        <i class="bi bi-gear" [routerLink]="achievement._id + '/view'"></i>
+        <i
+          [ngClass]="isOnViewPage ? '' : 'bi bi-gear'"
+          [routerLink]="achievement._id + '/view'"
+        ></i>
       </div>
       <p class="card-text centered desc">
         {{ achievement.description }}
@@ -37,10 +40,17 @@ export class AchievementCardComponent implements OnInit {
   @Input()
   achievement: Achievement;
 
+  isOnViewPage: boolean;
+
   constructor(
     private achievementsService: AchievementsService,
     private authService: AuthenticationService
-  ) {}
+  ) {
+    let path = window.location.pathname;
+    if (path.endsWith('view') || path.endsWith('edit')) {
+      this.isOnViewPage = true;
+    }
+  }
 
   ngOnInit() {}
 
