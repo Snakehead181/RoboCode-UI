@@ -24,6 +24,7 @@ import { AchievementsModule } from './achievements/achievements.module';
 import { ToastModule } from './global/toast/toast.module';
 import { MentorTeamService } from './services/mentor-team.service';
 import { TeamAchievementsModule } from './achievements/team-achievements/team-achievements.module';
+import { ClockComponent } from './leaderboard/timer/clock.component';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { TeamAchievementsModule } from './achievements/team-achievements/team-ac
     HomeComponent,
     LoginComponent,
     LeaderboardComponent,
+    ClockComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

@@ -6,7 +6,7 @@ import {
   TeamsLoaded,
 } from '../state/teams/teams.actions';
 import { Store } from '@ngrx/store';
-import { AssignedMentor, Team } from '../models';
+import { Team } from '../models';
 
 @Injectable()
 export class TeamService {
@@ -41,5 +41,20 @@ export class TeamService {
   updateTeam(id: string, team: Team) {
     console.log('Update Team');
     return this.httpClient.put('http://localhost:3000/teams/' + id, team);
+  }
+
+  updateTeamAchievements(
+    achievementId: string,
+    teamId: string,
+    achievementCompleted: boolean
+  ) {
+    console.log('Update Team Achievements');
+    return this.httpClient.put(
+      'http://localhost:3000/teamAchievements/' + teamId,
+      {
+        achievementId: achievementId,
+        completed: achievementCompleted,
+      }
+    );
   }
 }

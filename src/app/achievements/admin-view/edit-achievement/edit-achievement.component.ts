@@ -88,9 +88,9 @@ import {
         </form>
       </div>
       <div class="column">
-        <!-- <div class="col-6">
+        <div class="col-6">
           <achievement-card [achievement]="achievement"></achievement-card>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>`,

@@ -1,19 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { ToastService } from 'src/app/global/toast/toast.service';
 import { Achievement } from 'src/app/models';
-import { AchievementsService, AuthenticationService } from 'src/app/services';
+import { AuthenticationService, TeamService } from 'src/app/services';
 
 @Component({
   selector: 'team-achievement-card',
-  template: ` <div class="card">
+  template: ` <div
+    class="card"
+    [ngClass]="achievement.completed ? 'completed' : 'not-completed'"
+  >
     <div class="card-body">
       <div class="top-part centered">
         <i
           *ngIf="achievement.requiresVerification"
-          class="bi bi-exclamation-circle"
           title="Requires Verification"
+          class="bi bi-exclamation-circle"
         ></i>
         <h5 class="card-title">{{ achievement.name }}</h5>
-        <i class="bi bi-gear" [routerLink]="achievement._id + '/view'"></i>
+
+        <i
+          [ngClass]="isOnViewPage ? '' : 'bi bi-gear'"
+          [routerLink]="achievement._id + '/view'"
+        ></i>
       </div>
       <p class="card-text centered desc">
         {{ achievement.description }}
@@ -22,14 +32,20 @@ import { AchievementsService, AuthenticationService } from 'src/app/services';
         {{ achievement.points }} Points
       </p>
       <div class="bottom-part centered">
-        <i class="bi bi-x-circle" (click)="achievementNotCompleted()"></i>
+        <i
+          [ngClass]="!achievement.completed ? '' : 'bi bi-x-circle'"
+          (click)="achievementNotCompleted()"
+        ></i>
         <p
           class="card-text centered"
           style="font-style: italic; font-size: 12px"
         >
           {{ achievement.achievementType }}
         </p>
-        <i class="bi bi-check-circle" (click)="achievementCompleted()"></i>
+        <i
+          [ngClass]="achievement.completed ? '' : 'bi bi-check-circle'"
+          (click)="achievementCompleted()"
+        ></i>
       </div>
     </div>
   </div>`,
@@ -39,19 +55,55 @@ export class TeamAchievementCardComponent {
   @Input()
   achievement: Achievement;
 
+  teamId: string;
+  achievementCompletion: boolean;
+  isOnViewPage: boolean;
+
   constructor(
-    private achievementsService: AchievementsService,
-    private authService: AuthenticationService
-  ) {}
+    private teamService: TeamService,
+    private authService: AuthenticationService,
+    private toastService: ToastService
+  ) {
+    this.isOnViewPage = window.location.pathname.endsWith('view');
+    console.log(this.isOnViewPage);
+  }
 
   achievementNotCompleted() {
-    console.log(this.achievement.name);
+    this.achievementCompletion = false;
+    this.updateAchievementCompletion();
   }
 
   achievementCompleted() {
-    this.achievementsService.achievementCompleted(
+    this.achievementCompletion = true;
+    this.updateAchievementCompletion();
+  }
+
+  updateAchievementCompletion() {
+    let result$ = this.teamService.updateTeamAchievements(
       this.achievement._id,
-      this.authService.getCurrentUserObject()?.team?._id
+      this.authService.getCurrentUserObject().assignedTeam._id,
+      this.achievementCompletion
     );
+    result$
+      .pipe(
+        catchError((err) => {
+          return of({
+            errorMessage: 'Could not change achievement state',
+            err,
+          });
+        })
+      )
+      .subscribe((result: any) => {
+        if (result.errorMessage) {
+          this.toastService.danger({
+            text: 'Failed to update achievement',
+          });
+        } else {
+          this.toastService.success({
+            text: 'Achievment Updated',
+          });
+        }
+      });
+    window.location.reload();
   }
 }
