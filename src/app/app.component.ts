@@ -6,7 +6,7 @@ import { AuthenticationService } from './services';
   selector: 'app-root',
   template: `<html>
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark px-3">
-      <div class="container-fluid">
+      <div class="container">
         <a class="navbar-brand" routerLink="/">RoboRumble</a>
         <button
           class="navbar-toggler"
