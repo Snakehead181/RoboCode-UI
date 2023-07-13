@@ -46,14 +46,17 @@ export class TeamService {
   updateTeamAchievements(
     achievementId: string,
     teamId: string,
-    achievementCompleted: boolean
+    achievementCompleted: boolean,
+    achievementPoints: number
   ) {
     console.log('Update Team Achievements');
+
     return this.httpClient.put(
       'http://localhost:3000/teamAchievements/' + teamId,
       {
         achievementId: achievementId,
         completed: achievementCompleted,
+        points: achievementPoints,
       }
     );
   }

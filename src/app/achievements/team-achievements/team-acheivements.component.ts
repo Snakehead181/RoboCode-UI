@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map, switchMap } from 'rxjs';
 import { AuthenticationService, TeamService } from '../../services';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from 'src/app/models';
 import { teamById } from 'src/app/state/teams/teams.selector';
+import { TeamAchievementCardComponent } from './team-achievement-card/team-achievement-card.component';
 
 @Component({
   selector: 'team-achievements',
@@ -40,7 +41,7 @@ export class TeamAchievementsComponent {
     private store: Store,
     private route: ActivatedRoute
   ) {
-    this.teamService.getTeamDetails(this.route.snapshot.params['id']);
+    this.updateTeam();
   }
 
   team$ = this.route.params.pipe(
@@ -59,7 +60,15 @@ export class TeamAchievementsComponent {
     )
   );
 
+  updateTeam() {
+    this.teamService.getTeamDetails(this.route.snapshot.params['id']);
+  }
+
   checkRole(role) {
     this.authService.checkRole(role);
+  }
+
+  public getTeamScore() {
+    return this.team.score;
   }
 }

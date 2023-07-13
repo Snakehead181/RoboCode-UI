@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { ToastService } from 'src/app/global/toast/toast.service';
 import { Achievement } from 'src/app/models';
 import { AuthenticationService, TeamService } from 'src/app/services';
+import { TeamAchievementsComponent } from '../team-acheivements.component';
 
 @Component({
   selector: 'team-achievement-card',
@@ -58,11 +59,14 @@ export class TeamAchievementCardComponent {
   teamId: string;
   achievementCompletion: boolean;
   isOnViewPage: boolean;
+  teamScore: number;
 
   constructor(
     private teamService: TeamService,
     private authService: AuthenticationService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private teamAchievementsComp: TeamAchievementsComponent,
+    private route: ActivatedRoute
   ) {
     this.isOnViewPage = window.location.pathname.endsWith('view');
     console.log(this.isOnViewPage);
@@ -73,16 +77,27 @@ export class TeamAchievementCardComponent {
     this.updateAchievementCompletion();
   }
 
+  getTeamScore() {
+    return this.teamAchievementsComp.getTeamScore();
+  }
+
   achievementCompleted() {
     this.achievementCompletion = true;
     this.updateAchievementCompletion();
   }
 
   updateAchievementCompletion() {
+    this.teamScore = this.getTeamScore();
+    if (this.achievementCompletion === true) {
+      this.teamScore += this.achievement.points;
+    } else {
+      this.teamScore -= this.achievement.points;
+    }
     let result$ = this.teamService.updateTeamAchievements(
       this.achievement._id,
       this.authService.getCurrentUserObject().assignedTeam._id,
-      this.achievementCompletion
+      this.achievementCompletion,
+      this.teamScore
     );
     result$
       .pipe(
@@ -102,8 +117,9 @@ export class TeamAchievementCardComponent {
           this.toastService.success({
             text: 'Achievment Updated',
           });
+          this.teamAchievementsComp.updateTeam();
+          this.getTeamScore();
         }
       });
-    window.location.reload();
   }
 }
