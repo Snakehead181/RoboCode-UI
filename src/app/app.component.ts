@@ -17,7 +17,7 @@ import { AuthenticationService } from './services';
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon">
-            <i class="bi bi-list" style="color:#fff; font-size:28px;"></i>
+            <i class="bi bi-list" style="color:#00ff41; font-size:28px;"></i>
           </span>
         </button>
         <a class="navbar-brand" routerLink="/">RoboRumble</a>

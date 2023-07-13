@@ -10,21 +10,7 @@ import { Team } from 'src/app/models';
     <ng-template #allTeams>
       <div id="profile">
         <div class="row">
-          <div class="column">
-            <div class="flex reversed" *ngFor="let team of getTopFive()">
-              <div class="item">
-                <tank tankColor="{{ team.color }}"></tank>
-                <div class="info reversed">
-                  <div class="name">{{ team.name }}</div>
-                  <span class="team-number">Table {{ team.tableNumber }}</span>
-                </div>
-              </div>
-              <div class="item reversed">
-                <span>{{ team.score }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="column">
+          <div class="col-sm">
             <div class="flex" *ngFor="let team of getTopFive()">
               <div class="item">
                 <tank tankColor="{{ team.color }}"></tank>
@@ -34,6 +20,20 @@ import { Team } from 'src/app/models';
                 </div>
               </div>
               <div class="item">
+                <span>{{ team.score }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="flex reversed" *ngFor="let team of getTopFive()">
+              <div class="item">
+                <tank tankColor="{{ team.color }}"></tank>
+                <div class="info reversed">
+                  <div class="name">{{ team.name }}</div>
+                  <span class="team-number">Table {{ team.tableNumber }}</span>
+                </div>
+              </div>
+              <div class="item reversed">
                 <span>{{ team.score }}</span>
               </div>
             </div>
