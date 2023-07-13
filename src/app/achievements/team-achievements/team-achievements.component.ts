@@ -20,7 +20,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
     <div *ngIf="team$ | async">
       <div class="row card-group">
         <team-achievement-card
-          class="col-3"
+          class="col-12 col-lg-3 col-md-6"
           *ngFor="let achievement of team.achievements"
           [achievement]="achievement"
           [teamId]="team._id"

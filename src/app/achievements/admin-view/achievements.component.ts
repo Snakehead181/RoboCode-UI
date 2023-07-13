@@ -27,7 +27,7 @@ import { ActivatedRoute, Router } from '@angular/router';
         </option>
       </select>
       <button type="button" class="btn btn-primary" [routerLink]="['create']">
-        Create Achievement
+        Add
       </button>
     </div>
     <div class="d-flex justify-content-center" *ngIf="loading$ | async">
