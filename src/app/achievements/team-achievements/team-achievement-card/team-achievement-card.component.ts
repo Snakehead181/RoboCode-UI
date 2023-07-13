@@ -1,5 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { ToastService } from 'src/app/global/toast/toast.service';
 import { Achievement } from 'src/app/models';
