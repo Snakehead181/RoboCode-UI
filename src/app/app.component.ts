@@ -7,7 +7,6 @@ import { AuthenticationService } from './services';
   template: `<html>
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark px-3">
       <div class="container">
-        <a class="navbar-brand" routerLink="/">RoboRumble</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -21,6 +20,7 @@ import { AuthenticationService } from './services';
             <i class="bi bi-list" style="color:#fff; font-size:28px;"></i>
           </span>
         </button>
+        <a class="navbar-brand" routerLink="/">RoboRumble</a>
         <div
           class="collapse navbar-collapse"
           id="navbarSupportedContent"

@@ -13,7 +13,7 @@ import { allTeams } from '../state/teams/teams.selector';
     <h4 class="card-header">Welcome to RoboRumble 2023</h4>
     <div class="card-body">
       <div class="row">
-        <div class="column">
+        <div class="col-sm">
           <h6>Teams</h6>
           <div
             *ngIf="loadingTeams$ | async"
@@ -25,7 +25,7 @@ import { allTeams } from '../state/teams/teams.selector';
             </li>
           </ul>
         </div>
-        <div class="column">
+        <div class="col-sm">
           <h6>Mentors</h6>
           <div
             *ngIf="loadingMentors$ | async"
