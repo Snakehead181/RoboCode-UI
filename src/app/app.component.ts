@@ -5,8 +5,83 @@ import { AuthenticationService } from './services';
 @Component({
   selector: 'app-root',
   template: `<html>
-    <nav class="navbar navbar-expand navbar-dark bg-dark px-3" *ngIf="user">
-      <div class="navbar-nav">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark px-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">RoboRumble</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-exapanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon">
+            <i class="bi bi-list" style="color:#fff; font-size:28px;"></i>
+          </span>
+        </button>
+        <div
+          class="collapse navbar-collapse"
+          id="navbarSupportedContent"
+          *ngIf="user"
+        >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                aria-current="page"
+                routerLink="/"
+                routerLinkActive="active"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                routerLink="/mentors"
+                routerLinkActive="active"
+                *ngIf="role('ADMIN')"
+                >Mentors</a
+              >
+            </li>
+            <li>
+              <a class="nav-link" routerLink="/teams" routerLinkActive="active"
+                >Teams</a
+              >
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                routerLink="/leaderboard"
+                routerLinkActive="active"
+                >Leaderboard</a
+              >
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                [routerLink]="'/achievements/' + getTeamId()"
+                routerLinkActive="active"
+                *ngIf="role('MENTOR')"
+                >Team Achievements</a
+              >
+            </li>
+            <li>
+              <a
+                class="nav-link"
+                routerLink="/achievements"
+                routerLinkActive="active"
+                *ngIf="role('ADMIN')"
+                >Achievements</a
+              >
+            </li>
+            <li>
+              <a class="nav-link" (click)="logout()"> Logout </a>
+            </li>
+          </ul>
+
+          <!--
         <a
           class="nav-item nav-link"
           routerLink="/"
@@ -47,13 +122,12 @@ import { AuthenticationService } from './services';
           *ngIf="role('ADMIN')"
           >Achievements</a
         >
-        <button class="btn btn-link nav-item nav-link" (click)="logout()">
-          Logout
-        </button>
+        <a class="nav-item nav-link" (click)="logout()"> Logout </a> -->
+        </div>
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
       <router-outlet></router-outlet>
     </div>
     <toast-container aria-live="polite" aria-atomic="true"></toast-container>
@@ -62,6 +136,10 @@ import { AuthenticationService } from './services';
     `
       nav {
         background-color: black !important;
+      }
+
+      .nav-item:hover {
+        cursor: pointer;
       }
     `,
   ],

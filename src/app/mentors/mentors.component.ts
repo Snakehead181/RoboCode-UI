@@ -10,7 +10,7 @@ import { map } from 'rxjs';
     <h4 class="card-header">Mentors</h4>
     <div class="card-body">
       <div class="row">
-        <div class="column">
+        <div class="col-sm">
           <h6>Mentors Registered</h6>
           <div
             *ngIf="loading$ | async"
@@ -25,7 +25,7 @@ import { map } from 'rxjs';
             </li>
           </ul>
         </div>
-        <div class="column">
+        <div class="col-sm">
           <register-mentor></register-mentor>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map } from 'rxjs';
 import { Mentor } from 'src/app/models';
-import { MentorService } from 'src/app/services';
+import { AuthenticationService, MentorService } from 'src/app/services';
 import { mentorById } from 'src/app/state/mentors/mentors.selector';
 
 @Component({
@@ -12,12 +12,18 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
     <ng-container *ngIf="mentor$ | async as mentor">
       <div class="card-header">
         <h4>{{ mentor.name }}</h4>
-        <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-          Change Mentor Details
-        </button>
-        <button type="button" class="btn btn-primary" (click)="removeMentor()">
-          Remove Mentor
-        </button>
+        <ng-container *ngIf="getRole('ADMIN')">
+          <button type="button" class="btn btn-primary" [routerLink]="['edit']">
+            Change Mentor Details
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="removeMentor()"
+          >
+            Remove Mentor
+          </button>
+        </ng-container>
       </div>
       <div class="card-body">
         <div class="row">
@@ -50,7 +56,8 @@ export class MentorComponent implements OnInit {
     private store: Store,
     private route: ActivatedRoute,
     private mentorService: MentorService,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService
   ) {
     this.mentorService.getMentorDetails(this.route.snapshot.params['id']);
   }
@@ -76,5 +83,9 @@ export class MentorComponent implements OnInit {
     this.mentorService.removeMentor(this.mentor._id);
 
     this.router.navigateByUrl('/mentors');
+  }
+
+  getRole(role) {
+    return this.authService.checkRole(role);
   }
 }

@@ -10,7 +10,7 @@ import { allTeams } from '../state/teams/teams.selector';
     <h4 class="card-header">Teams</h4>
     <div class="card-body">
       <div class="row">
-        <div class="column">
+        <div class="col-sm">
           <h6>Teams Registered</h6>
           <div
             *ngIf="loading$ | async"
@@ -25,7 +25,7 @@ import { allTeams } from '../state/teams/teams.selector';
             </li>
           </ul>
         </div>
-        <div class="column">
+        <div class="col-sm">
           <register-team></register-team>
         </div>
       </div>

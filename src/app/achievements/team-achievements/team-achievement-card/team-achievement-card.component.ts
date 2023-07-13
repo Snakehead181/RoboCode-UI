@@ -4,7 +4,7 @@ import { catchError, of } from 'rxjs';
 import { ToastService } from 'src/app/global/toast/toast.service';
 import { Achievement } from 'src/app/models';
 import { AuthenticationService, TeamService } from 'src/app/services';
-import { TeamAchievementsComponent } from '../team-acheivements.component';
+import { TeamAchievementsComponent } from '../team-achievements.component';
 
 @Component({
   selector: 'team-achievement-card',
@@ -32,7 +32,7 @@ import { TeamAchievementsComponent } from '../team-acheivements.component';
       <p class="card-text centered" style="font-size: 15px">
         {{ achievement.points }} Points
       </p>
-      <div class="bottom-part centered">
+      <div class="bottom-part centered" *ngIf="!isOnViewPage">
         <i
           [ngClass]="!achievement.completed ? '' : 'bi bi-x-circle'"
           (click)="achievementNotCompleted()"
@@ -56,7 +56,9 @@ export class TeamAchievementCardComponent {
   @Input()
   achievement: Achievement;
 
+  @Input()
   teamId: string;
+
   achievementCompletion: boolean;
   isOnViewPage: boolean;
   teamScore: number;
@@ -65,8 +67,7 @@ export class TeamAchievementCardComponent {
     private teamService: TeamService,
     private authService: AuthenticationService,
     private toastService: ToastService,
-    private teamAchievementsComp: TeamAchievementsComponent,
-    private route: ActivatedRoute
+    private teamAchievementsComp: TeamAchievementsComponent
   ) {
     this.isOnViewPage = window.location.pathname.endsWith('view');
     console.log(this.isOnViewPage);
@@ -95,7 +96,7 @@ export class TeamAchievementCardComponent {
     }
     let result$ = this.teamService.updateTeamAchievements(
       this.achievement._id,
-      this.authService.getCurrentUserObject().assignedTeam._id,
+      this.teamId,
       this.achievementCompletion,
       this.teamScore
     );

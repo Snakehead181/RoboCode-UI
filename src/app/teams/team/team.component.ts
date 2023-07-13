@@ -42,6 +42,10 @@ import { teamById } from 'src/app/state/teams/teams.selector';
                 <div>{{ team.color }}</div>
               </li>
               <li class="list-group-item">
+                <div>Score:</div>
+                <div>{{ team.score }}</div>
+              </li>
+              <li class="list-group-item">
                 <div>Assigned Mentor:</div>
                 <div>
                   {{ team.assignedMentor.name }}
@@ -56,7 +60,6 @@ import { teamById } from 'src/app/state/teams/teams.selector';
       </div>
     </ng-container>
   </div>`,
-  styleUrls: ['team.component.css'],
 })
 export class TeamComponent {
   mentorState$ = this.store.select((s: any) => s.mentor);

@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'mentors',
     loadChildren: () =>
       import('./mentors/mentors.module').then((m) => m.MentorsModule),
-    canActivate: [AdminGuard],
+    canActivate: [MentorGuard],
   },
   {
     path: 'achievements',

@@ -13,7 +13,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { StoreModule } from '@ngrx/store';
-import { MentorService, TeamService } from './services';
+import { AchievementsService, MentorService, TeamService } from './services';
 import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
 import { rootReducer } from './state/root.reducer';
@@ -61,6 +61,7 @@ import { ClockComponent } from './leaderboard/timer/clock.component';
     MentorService,
     TeamService,
     MentorTeamService,
+    AchievementsService,
     // provider used to create fake backend
     fakeBackendProvider,
   ],

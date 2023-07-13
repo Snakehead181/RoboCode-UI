@@ -50,7 +50,7 @@ import { achievementById } from 'src/app/state/achievements/achivements.selector
       </div>
     </ng-container>
   </div>`,
-  styleUrls: ['team-achievement.component.css'],
+  styleUrls: ['../team-achievements.component.css'],
 })
 export class TeamAchievementComponent {
   achievement: Achievement;
@@ -61,11 +61,7 @@ export class TeamAchievementComponent {
     private router: Router,
     private achievementsService: AchievementsService,
     private authService: AuthenticationService
-  ) {
-    this.achievementsService.getAchievementDetails(
-      this.route.snapshot.params['id']
-    );
-  }
+  ) {}
 
   achievement$ = this.route.params.pipe(
     switchMap((p) =>

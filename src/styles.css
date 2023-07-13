@@ -41,31 +41,34 @@ html {
   padding: 1em;
 }
 
-.nav-link {
-  color: #00ff41;
-}
-
-.nav-link:hover {
-  color: #008f11;
-}
-
 .card-header {
   background-color: black;
   color: #00ff41;
   border-color: #00ff41;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-link {
+  color: #00ff41 !important;
+}
+
+.navbar-brand {
+  color: #00ff41 !important;
+}
+
+.nav-link:hover {
+  color: #008f11 !important;
 }
 
 input,
 button,
+select,
+.btn,
+.list-group-item,
 .card {
   background-color: black;
   border-color: #00ff41;
-  color: #00ff41;
-}
-
-input:focus {
-  background-color: black;
-  cursor: #00ff41;
   color: #00ff41;
 }
 
@@ -73,10 +76,20 @@ label {
   color: #00ff41;
 }
 
-button:hover {
+.btn:hover {
   background-color: #202020;
 }
 
 a {
   color: lightgrey;
+}
+
+.column {
+  justify-content: space-between;
+  width: 50%;
+}
+
+.list-group-item {
+  justify-content: space-between;
+  display: flex;
 }

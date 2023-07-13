@@ -1,11 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map, switchMap } from 'rxjs';
 import { AuthenticationService, TeamService } from '../../services';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from 'src/app/models';
 import { teamById } from 'src/app/state/teams/teams.selector';
-import { TeamAchievementCardComponent } from './team-achievement-card/team-achievement-card.component';
 
 @Component({
   selector: 'team-achievements',
@@ -24,6 +23,7 @@ import { TeamAchievementCardComponent } from './team-achievement-card/team-achie
           class="col-3"
           *ngFor="let achievement of team.achievements"
           [achievement]="achievement"
+          [teamId]="team._id"
         ></team-achievement-card>
       </div>
     </div>
@@ -68,7 +68,7 @@ export class TeamAchievementsComponent {
     this.authService.checkRole(role);
   }
 
-  public getTeamScore() {
+  getTeamScore() {
     return this.team.score;
   }
 }
