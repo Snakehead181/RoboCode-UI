@@ -101,16 +101,16 @@ export class TeamComponent {
     return this.authService.getRole() || '';
   }
 
-  async removeTeam() {
+  removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
 
     this.teamService
       .removeTeam(this.team._id, this.team.assignedMentor._id)
       .subscribe((result: any) => {
-        console.log('FORM RESULTTTT', result);
+        this.router.navigateByUrl('/teams');
         if (result === null) {
-          console.log(result.errorMessage);
+          this.router.navigateByUrl('/teams/' + this.team._id);
           this.toastService.danger({
             text: 'Failed to Remove Team',
           });
@@ -120,8 +120,5 @@ export class TeamComponent {
           });
         }
       });
-
-    await this.router.navigateByUrl('/teams');
-    window.location.reload();
   }
 }

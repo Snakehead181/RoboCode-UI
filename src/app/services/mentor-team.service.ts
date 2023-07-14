@@ -8,17 +8,16 @@ export class MentorTeamService {
 
   updateMentorsAssignedTeam(id: string, assignedTeam: AssignedTeam) {
     console.log(`Updating mentor with ID: ${id} with`, assignedTeam);
-    return this.httpClient
-      .put('http://localhost:3000/assignedTeams/' + id, assignedTeam)
-      .subscribe((res) => {
-        console.log(res);
-      });
+    return this.httpClient.put(
+      'https://robocode-392510.appspot.com/assignedTeams/' + id,
+      assignedTeam
+    );
   }
 
   updateTeamsAssignedMentors(id: string, assignedMentor: AssignedMentor) {
     console.log('Updating assigned mentor');
     return this.httpClient.put(
-      'http://localhost:3000/assignedMentors/' + id,
+      'https://robocode-392510.appspot.com/assignedMentors/' + id,
       assignedMentor
     );
   }

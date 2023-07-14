@@ -7,7 +7,7 @@
       "type": "pwa-chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
-      "url": "http://localhost:3000/"
+      "url": "https://robocode-392510.appspot.com/"
     },
     {
       "name": "ng test",

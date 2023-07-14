@@ -16,19 +16,22 @@ export class MentorService {
   getMentors(): void {
     this.store.dispatch(LoadMentors());
     this.httpClient
-      .get('http://localhost:3000/mentors')
+      .get('https://robocode-392510.appspot.com/mentors')
       .subscribe((res: any) => {
         this.store.dispatch(MentorsLoaded({ data: res }));
       });
   }
 
   addMentor(mentor) {
-    return this.httpClient.post('http://localhost:3000/mentors', mentor);
+    return this.httpClient.post(
+      'https://robocode-392510.appspot.com/mentors',
+      mentor
+    );
   }
 
   getMentorDetails(mentorId: string) {
     this.httpClient
-      .get('http://localhost:3000/mentors/' + mentorId)
+      .get('https://robocode-392510.appspot.com/mentors/' + mentorId)
       .subscribe((a) => {
         this.store.dispatch(MentorLoaded({ data: a as Mentor }));
       });
@@ -37,14 +40,14 @@ export class MentorService {
   updateMentor(mentor: Mentor) {
     console.log(mentor);
     return this.httpClient.put(
-      'http://localhost:3000/mentors/' + mentor._id,
+      'https://robocode-392510.appspot.com/mentors/' + mentor._id,
       mentor
     );
   }
 
   removeMentor(teamId: string) {
     return this.httpClient
-      .delete('http://localhost:3000/mentors/' + teamId)
+      .delete('https://robocode-392510.appspot.com/mentors/' + teamId)
       .subscribe(() => console.log('Mentor Deleted'));
   }
 }

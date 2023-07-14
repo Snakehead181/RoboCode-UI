@@ -37,42 +37,43 @@ import { teamById } from 'src/app/state/teams/teams.selector';
         </button>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="column">
-            <form id="edit-mentor" [formGroup]="editMentorForm">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div>Name:</div>
-                  <input
-                    type="text"
-                    formControlName="name"
-                    class="form-control"
-                  />
-                </li>
-                <li class="list-group-item">
-                  <div>Username:</div>
-                  <input
-                    type="text"
-                    formControlName="username"
-                    class="form-control"
-                  />
-                </li>
-                <li class="list-group-item">
-                  <div>Password:</div>
-                  <input
-                    type="password"
-                    formControlName="password"
-                    class="form-control"
-                  />
-                </li>
-                <li class="list-group-item">
-                  <div>Assigned Team:</div>
-                  <div>{{ mentor.assignedTeam.name }}</div>
-                </li>
-              </ul>
-            </form>
-          </div>
-        </div>
+        <form id="edit-mentor" [formGroup]="editMentorForm">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div>Name:</div>
+              <input type="text" formControlName="name" class="form-control" />
+            </li>
+            <li class="list-group-item">
+              <div>Username:</div>
+              <input
+                type="text"
+                formControlName="username"
+                class="form-control"
+              />
+            </li>
+            <li class="list-group-item">
+              <div>Password:</div>
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+              />
+            </li>
+            <li class="list-group-item">
+              <div>Assigned Team:</div>
+              <ng-container *ngIf="mentor.assignedTeam._id !== ''">
+                <button class="btn btn-success" (click)="removeTeam()">
+                  Remove Team
+                </button>
+                <ng-template>
+                  Name: {{ mentor.assignedTeam.name }} | ID:
+                  {{ mentor.assignedTeam._id }}</ng-template
+                >
+              </ng-container>
+              <div>No Assigned Mentor</div>
+            </li>
+          </ul>
+        </form>
       </div>
     </ng-container>
   </div>`,
@@ -122,6 +123,13 @@ export class EditMentorComponent {
     )
   );
 
+  removeTeam() {
+    this.editMentorForm.controls['assignedTeam'].setValue({
+      _id: '',
+      name: '',
+    });
+  }
+
   submit() {
     this.editMentorForm.markAllAsTouched();
     if (this.editMentorForm.valid) {
@@ -145,11 +153,10 @@ export class EditMentorComponent {
             this.toastService.success({
               text: 'Mentor Updated',
             });
+            this.editMentorForm.reset();
+            this.router.navigateByUrl('mentors/' + this.mentor._id);
           }
         });
-
-      this.editMentorForm.reset();
-      this.router.navigateByUrl('mentors/' + this.mentor._id);
     }
   }
 }

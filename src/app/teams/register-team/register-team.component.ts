@@ -6,7 +6,7 @@ import {
   TeamService,
 } from '../../services';
 import { ToastService } from '../../global/toast/toast.service';
-import { catchError, empty, of } from 'rxjs';
+import { Observable, catchError, empty, of } from 'rxjs';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { Store } from '@ngrx/store';
 import { allTeams } from 'src/app/state/teams/teams.selector';
@@ -67,15 +67,11 @@ import { ColorCircleModule } from 'ngx-color/circle';
               </option>
             </select>
           </div>
-          <button
-            class="btn btn-primary"
-            type="submit"
-            [disabled]="isButtonDisabled"
-          >
-            <div class="spinner-border" role="status" *ngIf="isButtonDisabled">
+          <button class="btn btn-primary" type="submit">
+            <div class="spinner-border" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <div *ngIf="!isButtonDisabled">Add Team</div>
+            <div>Add Team</div>
           </button>
         </form>
       </div>
@@ -89,7 +85,6 @@ export class RegisterTeamComponent implements OnInit {
   achievements$ = this.store.select(allAchievements);
   achievementsArr: Achievement[] = [];
 
-  isButtonDisabled = false;
   mentorValues: Mentor;
 
   constructor(
@@ -145,8 +140,6 @@ export class RegisterTeamComponent implements OnInit {
     console.log('submit');
     this.teamForm.markAllAsTouched();
     if (this.teamForm.valid && this.teamForm.value.assignedMentor?._id !== '') {
-      this.isButtonDisabled = true;
-
       let formValues = this.teamForm.getRawValue();
       let result$ = this.teamService.addTeam(formValues);
       result$.subscribe((result: any) => {
@@ -165,15 +158,18 @@ export class RegisterTeamComponent implements OnInit {
             name: formValues.name!,
           };
           console.log(assignedTeam);
-          this.mentorTeamService.updateMentorsAssignedTeam(
-            formValues.assignedMentor!._id,
-            assignedTeam
-          );
+          this.mentorTeamService
+            .updateMentorsAssignedTeam(
+              formValues.assignedMentor!._id,
+              assignedTeam
+            )
+            .subscribe((res) => {
+              console.log(res);
+            });
           this.teamForm.reset();
           this.updateTeams();
         }
       });
-      this.isButtonDisabled = false;
     } else {
       this.toastService.danger({
         text: 'Form is Invalid',

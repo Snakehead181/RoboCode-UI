@@ -14,33 +14,44 @@ export class TeamService {
 
   getTeams(): void {
     this.store.dispatch(LoadTeams());
-    this.httpClient.get('http://localhost:3000/teams').subscribe((res: any) => {
-      this.store.dispatch(TeamsLoaded({ data: res }));
-    });
+    this.httpClient
+      .get('https://robocode-392510.appspot.com/teams')
+      .subscribe((res: any) => {
+        this.store.dispatch(TeamsLoaded({ data: res }));
+      });
   }
 
   getTeamDetails(teamId: string): void {
     this.httpClient
-      .get('http://localhost:3000/teams/' + teamId)
+      .get('https://robocode-392510.appspot.com/teams/' + teamId)
       .subscribe((t) => {
         this.store.dispatch(TeamLoaded({ data: t as Team }));
       });
   }
 
   addTeam(team) {
-    return this.httpClient.post('http://localhost:3000/teams', team);
+    return this.httpClient.post(
+      'https://robocode-392510.appspot.com/teams',
+      team
+    );
   }
 
   removeTeam(teamId: string, mentorId: string) {
     console.log(teamId);
-    return this.httpClient.delete('http://localhost:3000/teams/' + teamId, {
-      body: { mentor: mentorId },
-    });
+    return this.httpClient.delete(
+      'https://robocode-392510.appspot.com/teams/' + teamId,
+      {
+        body: { mentor: mentorId },
+      }
+    );
   }
 
   updateTeam(id: string, team: Team) {
     console.log('Update Team');
-    return this.httpClient.put('http://localhost:3000/teams/' + id, team);
+    return this.httpClient.put(
+      'https://robocode-392510.appspot.com/teams/' + id,
+      team
+    );
   }
 
   updateTeamAchievements(
@@ -52,7 +63,7 @@ export class TeamService {
     console.log('Update Team Achievements');
 
     return this.httpClient.put(
-      'http://localhost:3000/teamAchievements/' + teamId,
+      'https://robocode-392510.appspot.com/teamAchievements/' + teamId,
       {
         achievementId: achievementId,
         completed: achievementCompleted,

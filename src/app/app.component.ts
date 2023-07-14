@@ -31,16 +31,18 @@ import { AuthenticationService } from './services';
               <a
                 class="nav-link"
                 aria-current="page"
-                routerLink="/"
-                routerLinkActive="active"
+                [routerLink]="['/']"
+                [routerLinkActive]="['active']"
+                [routerLinkActiveOptions]="{ exact: true }"
                 >Home</a
               >
             </li>
             <li>
               <a
                 class="nav-link"
-                routerLink="/mentors"
-                routerLinkActive="active"
+                [routerLink]="['/mentors']"
+                [routerLinkActive]="['active']"
+                [routerLinkActiveOptions]="{ exact: true }"
                 *ngIf="role('ADMIN')"
                 >Mentors</a
               >
@@ -131,6 +133,12 @@ import { AuthenticationService } from './services';
       <router-outlet></router-outlet>
     </div>
     <toast-container aria-live="polite" aria-atomic="true"></toast-container>
+    <footer>
+      <div class="container">
+        <br />
+        <br />
+      </div>
+    </footer>
   </html>`,
   styles: [
     `

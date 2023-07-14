@@ -15,7 +15,7 @@ export class AchievementsService {
   getAchievements() {
     this.store.dispatch(LoadAchievements());
     this.httpClient
-      .get('http://localhost:3000/achievements')
+      .get('https://robocode-392510.appspot.com/achievements')
       .subscribe((res: any) => {
         console.log('Get Achievements Response', { res });
         this.store.dispatch(AchievementsLoaded({ data: res }));
@@ -24,14 +24,14 @@ export class AchievementsService {
 
   addAchievement(achievement) {
     return this.httpClient.post(
-      'http://localhost:3000/achievements',
+      'https://robocode-392510.appspot.com/achievements',
       achievement
     );
   }
 
   getAchievementDetails(achievementId: string) {
     this.httpClient
-      .get('http://localhost:3000/achievements/' + achievementId)
+      .get('https://robocode-392510.appspot.com/achievements/' + achievementId)
       .subscribe((a) => {
         this.store.dispatch(AchievementLoaded({ data: a as Achievement }));
       });
@@ -39,20 +39,25 @@ export class AchievementsService {
 
   updateAchievement(achievement: Achievement) {
     return this.httpClient.put(
-      'http://localhost:3000/achievements/' + achievement._id,
+      'https://robocode-392510.appspot.com/achievements/' + achievement._id,
       achievement
     );
   }
 
   deleteAchievement(achievementId: string) {
     return this.httpClient
-      .delete('http://localhost:3000/achievements/' + achievementId)
+      .delete(
+        'https://robocode-392510.appspot.com/achievements/' + achievementId
+      )
       .subscribe(() => console.log('Achievement Deleted'));
   }
 
   achievementCompleted(achievementId: string, team: Team) {
     return this.httpClient
-      .put('http://localhost:3000/teamAchievements/' + achievementId, team)
+      .put(
+        'https://robocode-392510.appspot.com/teamAchievements/' + achievementId,
+        team
+      )
       .subscribe(() => console.log('Achievement Marked as Completed'));
   }
 }

@@ -46,6 +46,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     </div>
     <div class="row card-group" *ngIf="impersonating && team.achievements">
       <team-achievement-card
+        class="col-12 col-lg-3 col-md-6"
         *ngFor="let achievement of team.achievements"
         [achievement]="achievement"
         [teamId]="team._id"
