@@ -6,16 +6,14 @@ import {
   TeamService,
 } from '../../services';
 import { ToastService } from '../../global/toast/toast.service';
-import { Observable, catchError, empty, of } from 'rxjs';
 import { freeMentors } from 'src/app/state/mentors/mentors.selector';
 import { Store } from '@ngrx/store';
 import { allTeams } from 'src/app/state/teams/teams.selector';
 import { Router } from '@angular/router';
-import { Achievement, AssignedMentor, Mentor } from 'src/app/models';
+import { Achievement, Mentor } from 'src/app/models';
 import { MentorTeamService } from 'src/app/services/mentor-team.service';
 import { allAchievements } from 'src/app/state/achievements/achivements.selector';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { ColorCircleModule } from 'ngx-color/circle';
+import { TANK_COLORS } from './colors';
 
 @Component({
   selector: 'register-team',
@@ -46,6 +44,9 @@ import { ColorCircleModule } from 'ngx-color/circle';
             <color-circle
               (onChangeComplete)="changeComplete($event)"
               formControlName="color"
+              [colors]="colors"
+              [circleSpacing]="15"
+              width="100%"
             ></color-circle>
           </div>
 
@@ -84,6 +85,7 @@ export class RegisterTeamComponent implements OnInit {
   allTeams$ = this.store.select(allTeams);
   achievements$ = this.store.select(allAchievements);
   achievementsArr: Achievement[] = [];
+  colors = TANK_COLORS;
 
   mentorValues: Mentor;
 
@@ -139,7 +141,7 @@ export class RegisterTeamComponent implements OnInit {
   submit() {
     console.log('submit');
     this.teamForm.markAllAsTouched();
-    if (this.teamForm.valid && this.teamForm.value.assignedMentor?._id !== '') {
+    if (this.teamForm.valid) {
       let formValues = this.teamForm.getRawValue();
       let result$ = this.teamService.addTeam(formValues);
       result$.subscribe((result: any) => {

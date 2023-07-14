@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { switchMap, map } from 'rxjs';
+import { switchMap, map, Observable } from 'rxjs';
 import { Mentor } from 'src/app/models';
 import { AuthenticationService, MentorService } from 'src/app/services';
 import { mentorById } from 'src/app/state/mentors/mentors.selector';
@@ -47,6 +47,7 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
 })
 export class MentorComponent implements OnInit {
   mentor: Mentor;
+  mentor$: Observable<Mentor | null>;
 
   constructor(
     private store: Store,
@@ -55,23 +56,21 @@ export class MentorComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService
   ) {
-    this.mentorService.getMentorDetails(this.route.snapshot.params['id']);
-  }
-
-  mentor$ = this.route.params.pipe(
-    switchMap((p) =>
-      this.store.pipe(
-        select(mentorById, p['id']),
-        map((mentor) => {
-          if (p['id'] && !mentor) {
-            return null;
-          }
-          this.mentor = mentor!;
-          return mentor ?? ({} as Mentor);
-        })
+    this.mentor$ = this.route.params.pipe(
+      switchMap((p) =>
+        this.store.pipe(
+          select(mentorById, p['id']),
+          map((mentor) => {
+            if (p['id'] && !mentor) {
+              return null;
+            }
+            this.mentor = mentor!;
+            return mentor ?? ({} as Mentor);
+          })
+        )
       )
-    )
-  );
+    );
+  }
 
   ngOnInit() {}
 
