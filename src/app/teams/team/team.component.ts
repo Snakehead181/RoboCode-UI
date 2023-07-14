@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { switchMap, map, Subscription } from 'rxjs';
+import { ToastService } from 'src/app/global/toast/toast.service';
 import { Team } from 'src/app/models';
 import {
   AuthenticationService,
@@ -74,7 +75,8 @@ export class TeamComponent {
     private router: Router,
     private teamService: TeamService,
     private mentorService: MentorService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private toastService: ToastService
   ) {
     this.teamService.getTeamDetails(this.route.snapshot.params['id']);
     this.mentorService.getMentors();
@@ -102,7 +104,20 @@ export class TeamComponent {
   async removeTeam() {
     console.log('Delete Team');
     console.log(this.team._id);
-    this.teamService.removeTeam(this.team._id);
+
+    this.teamService.removeTeam(this.team._id).subscribe((result: any) => {
+      console.log('FORM RESULTTTT', result);
+      if (result === null) {
+        console.log(result.errorMessage);
+        this.toastService.danger({
+          text: 'Failed to Remove Team',
+        });
+      } else {
+        this.toastService.success({
+          text: 'Removed Team',
+        });
+      }
+    });
 
     await this.router.navigateByUrl('/teams');
     window.location.reload();

@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { Achievement, AssignedMentor, Mentor } from 'src/app/models';
 import { MentorTeamService } from 'src/app/services/mentor-team.service';
 import { allAchievements } from 'src/app/state/achievements/achivements.selector';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ColorCircleModule } from 'ngx-color/circle';
 
 @Component({
   selector: 'register-team',
@@ -41,8 +43,12 @@ import { allAchievements } from 'src/app/state/achievements/achivements.selector
           </div>
           <div class="mb-3">
             <label class="form-label">Colour</label>
-            <input type="text" formControlName="color" class="form-control" />
+            <color-circle
+              (onChangeComplete)="changeComplete($event)"
+              formControlName="color"
+            ></color-circle>
           </div>
+
           <div class="mb-3">
             <label class="form-label" for="assignedMentor"
               >Assigned Mentor</label
@@ -61,12 +67,29 @@ import { allAchievements } from 'src/app/state/achievements/achivements.selector
               </option>
             </select>
           </div>
-          <button class="btn btn-primary" type="submit">Add Team</button>
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="isButtonDisabled"
+          >
+            <div class="spinner-border" role="status" *ngIf="isButtonDisabled">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div *ngIf="!isButtonDisabled">Add Team</div>
+          </button>
         </form>
       </div>
     </div>
   `,
   styleUrls: ['register-team.component.css'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ background: 'red' }),
+        animate('1s ease-out', style({})),
+      ]),
+    ]),
+  ],
 })
 export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
@@ -74,6 +97,7 @@ export class RegisterTeamComponent implements OnInit {
   achievements$ = this.store.select(allAchievements);
   achievementsArr: Achievement[] = [];
 
+  isButtonDisabled = false;
   mentorValues: Mentor;
 
   constructor(
@@ -87,6 +111,10 @@ export class RegisterTeamComponent implements OnInit {
     private achievementService: AchievementsService
   ) {
     this.getAchievements();
+  }
+
+  changeComplete(e) {
+    console.log(e);
   }
 
   ngOnInit(): void {
@@ -125,6 +153,8 @@ export class RegisterTeamComponent implements OnInit {
     console.log('submit');
     this.teamForm.markAllAsTouched();
     if (this.teamForm.valid) {
+      this.isButtonDisabled = true;
+
       let formValues = this.teamForm.getRawValue();
       let result$ = this.teamService.addTeam(formValues);
       result$.subscribe((result: any) => {
@@ -147,12 +177,11 @@ export class RegisterTeamComponent implements OnInit {
             formValues.assignedMentor!._id,
             assignedTeam
           );
+          this.teamForm.reset();
+          this.updateTeams();
         }
-
-        this.teamForm.reset();
-        // window.location.reload();
-        this.updateTeams();
       });
+      this.isButtonDisabled = false;
     }
   }
 }

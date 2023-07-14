@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TeamComponent } from './team/team.component';
 import { GlobalComponentModule } from '../global/components/global-components.module';
 import { EditTeamComponent } from './edit-team/edit-team.component';
+import { ColorCircleModule } from 'ngx-color/circle';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { EditTeamComponent } from './edit-team/edit-team.component';
     HttpClientModule,
     ReactiveFormsModule,
     GlobalComponentModule,
+    ColorCircleModule,
   ],
   exports: [],
   declarations: [
