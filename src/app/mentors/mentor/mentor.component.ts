@@ -14,36 +14,32 @@ import { mentorById } from 'src/app/state/mentors/mentors.selector';
         <h4>{{ mentor.name }}</h4>
         <ng-container *ngIf="getRole('ADMIN')">
           <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-            Change Mentor Details
+            Edit
           </button>
           <button
             type="button"
             class="btn btn-primary"
             (click)="removeMentor()"
           >
-            Remove Mentor
+            Remove
           </button>
         </ng-container>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="column">
-            <ul class="list-group">
-              <li class="list-group-item">
-                <div>Name:</div>
-                <div>{{ mentor.name }}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Username:</div>
-                <div>{{ mentor.username }}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Assigned Team:</div>
-                <div>{{ mentor.assignedTeam.name }}</div>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div>Name:</div>
+            <div>{{ mentor.name }}</div>
+          </li>
+          <li class="list-group-item">
+            <div>Username:</div>
+            <div>{{ mentor.username }}</div>
+          </li>
+          <li class="list-group-item">
+            <div>Assigned Team:</div>
+            <div>{{ mentor.assignedTeam.name }}</div>
+          </li>
+        </ul>
       </div>
     </ng-container>
   </div>`,

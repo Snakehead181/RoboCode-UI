@@ -23,15 +23,15 @@ import { teamById } from 'src/app/state/teams/teams.selector';
           type="button"
           class="btn btn-primary"
           [routerLink]="['..']"
-          form="edit-team"
+          form="edit-mentor"
         >
-          View Team
+          View Mentor
         </button>
         <button
           type="button"
           class="btn btn-primary"
           (click)="submit()"
-          form="edit-team"
+          form="edit-mentor"
         >
           Update Team
         </button>
@@ -39,7 +39,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
       <div class="card-body">
         <div class="row">
           <div class="column">
-            <form id="edit-team" [formGroup]="editMentorForm">
+            <form id="edit-mentor" [formGroup]="editMentorForm">
               <ul class="list-group">
                 <li class="list-group-item">
                   <div>Name:</div>

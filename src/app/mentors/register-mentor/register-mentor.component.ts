@@ -98,10 +98,11 @@ export class RegisterMentorComponent {
             this.toastService.success({
               text: 'Mentor Added',
             });
+
+            this.mentorForm.reset();
+            this.mentorService.getMentors();
           }
         });
-      this.mentorForm.reset();
-      this.mentorService.getMentors();
     }
   }
 }

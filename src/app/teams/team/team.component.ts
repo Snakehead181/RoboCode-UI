@@ -19,16 +19,16 @@ import { teamById } from 'src/app/state/teams/teams.selector';
         <h4>{{ team.name }}</h4>
         <ng-container *ngIf="getRole() === 'ADMIN'">
           <button type="button" class="btn btn-primary" [routerLink]="['edit']">
-            Edit Team
+            Edit
           </button>
           <button type="button" class="btn btn-primary" (click)="removeTeam()">
-            Remove Team
+            Remove
           </button>
         </ng-container>
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="column">
+          <div class="col-md">
             <ul class="list-group">
               <li class="list-group-item">
                 <div>Name:</div>
@@ -54,7 +54,7 @@ import { teamById } from 'src/app/state/teams/teams.selector';
               </li>
             </ul>
           </div>
-          <div class="column">
+          <div class="col-md">
             <team-display [team]="team"></team-display>
           </div>
         </div>
@@ -105,19 +105,21 @@ export class TeamComponent {
     console.log('Delete Team');
     console.log(this.team._id);
 
-    this.teamService.removeTeam(this.team._id).subscribe((result: any) => {
-      console.log('FORM RESULTTTT', result);
-      if (result === null) {
-        console.log(result.errorMessage);
-        this.toastService.danger({
-          text: 'Failed to Remove Team',
-        });
-      } else {
-        this.toastService.success({
-          text: 'Removed Team',
-        });
-      }
-    });
+    this.teamService
+      .removeTeam(this.team._id, this.team.assignedMentor._id)
+      .subscribe((result: any) => {
+        console.log('FORM RESULTTTT', result);
+        if (result === null) {
+          console.log(result.errorMessage);
+          this.toastService.danger({
+            text: 'Failed to Remove Team',
+          });
+        } else {
+          this.toastService.success({
+            text: 'Removed Team',
+          });
+        }
+      });
 
     await this.router.navigateByUrl('/teams');
     window.location.reload();

@@ -13,6 +13,22 @@ import { achievementById } from 'src/app/state/achievements/achivements.selector
       <div class="card-header">
         <h4>{{ achievement.name }}</h4>
       </div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [routerLink]="['../edit']"
+        *ngIf="checkRole('ADMIN')"
+      >
+        Edit Achievement
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="removeAchievement()"
+        *ngIf="checkRole('ADMIN')"
+      >
+        Remove Achievement
+      </button>
       <div class="card-body">
         <div class="row">
           <div class="column">

@@ -58,7 +58,7 @@ import { ColorCircleModule } from 'ngx-color/circle';
               class="form-select"
               formControlName="assignedMentor"
             >
-              <option value="null">Select Mentor</option>
+              <option selected disabled>Select Mentor</option>
               <option
                 *ngFor="let freeMentor of freeMentors$ | async"
                 [ngValue]="{ _id: freeMentor._id, name: freeMentor.name }"
@@ -82,14 +82,6 @@ import { ColorCircleModule } from 'ngx-color/circle';
     </div>
   `,
   styleUrls: ['register-team.component.css'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ background: 'red' }),
-        animate('1s ease-out', style({})),
-      ]),
-    ]),
-  ],
 })
 export class RegisterTeamComponent implements OnInit {
   freeMentors$ = this.store.select(freeMentors);
@@ -142,17 +134,17 @@ export class RegisterTeamComponent implements OnInit {
   teamForm = this.fb.group({
     _id: [],
     name: ['', Validators.required],
-    tableNumber: [''],
+    tableNumber: ['', Validators.required],
     score: [0],
-    color: [''],
-    assignedMentor: [{ _id: '', name: '' }],
+    color: ['', Validators.required],
+    assignedMentor: [{ _id: '', name: '' }, Validators.required],
     achievements: [this.achievementsArr],
   });
 
   submit() {
     console.log('submit');
     this.teamForm.markAllAsTouched();
-    if (this.teamForm.valid) {
+    if (this.teamForm.valid && this.teamForm.value.assignedMentor?._id !== '') {
       this.isButtonDisabled = true;
 
       let formValues = this.teamForm.getRawValue();
@@ -182,6 +174,10 @@ export class RegisterTeamComponent implements OnInit {
         }
       });
       this.isButtonDisabled = false;
+    } else {
+      this.toastService.danger({
+        text: 'Form is Invalid',
+      });
     }
   }
 }
